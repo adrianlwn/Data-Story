@@ -2,7 +2,7 @@
 title: Tweet Awareness
 email: adrian.loewenstein@epfl.ch
 url: https://tweet-awareness.eu
-description: "Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description."
+description: "Can we predict awareness to specific events in different countries around the globe ? \n Can we model the awareness using cultural metrics or simply using distance metrics between countries?"
 
 # Color settings (hex-codes without the leading hash-tag)
 color:
@@ -12,19 +12,9 @@ color:
 # Footer settings
 footer: Tweet Awareness
 
-# Social networks usernames (many more available: google-plus, flickr, dribbble, pinterest, instagram, tumblr, linkedin, etc.)
-social:
-  - title: twitter
-    url: https://twitter.com/SBootstrap
-  - title: facebook
-    url:
-  - title: stack-overflow
-    url: http://stackoverflow.com/questions/tagged/jekyll
-  - title: bitbucket
-    url: http://bitbucket.org/jekyll
-  - title: github
-    url: https://github.com/IronSummitMedia/startbootstrap
-
 # Build settings
 markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
 permalink: pretty

@@ -5,7 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Tweet Awareness</title>
     <meta name="viewport" content="width=device-width">
-    <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.">
+    <meta name="description" content="Can we predict awareness to specific events in different countries around the globe ? 
+ Can we model the awareness using cultural metrics or simply using distance metrics between countries?">
     <link rel="canonical" href="http://localhost:4000/">
 
     <!-- Custom CSS & Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
@@ -25,7 +26,8 @@
 
 </head>
 
-    <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+    <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top" >
+
      <!-- Navigation -->
     <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
         <div class="container">
@@ -68,7 +70,8 @@
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
                         <h1 class="brand-heading">Tweet Awareness</h1>
-                        <p class="intro-text">Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.<br>
+                        <p class="intro-text">Can we predict awareness to specific events in different countries around the globe ? 
+ Can we model the awareness using cultural metrics or simply using distance metrics between countries?<br>
                         <a href="#about" class="btn btn-circle page-scroll">
                             <i class="fa fa-angle-double-down animated"></i>
                         </a>
@@ -78,66 +81,31 @@
         </div>
     </header>
 
-        <!-- About Section -->
-    <section id="about" class="container content-section text-center">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2">
-                <h2>About Grayscale</h2>
-                <p>Grayscale is a free Bootstrap 3 theme created by Start Bootstrap. It can be yours right now, simply download the template on <a href="http://startbootstrap.com/template-overviews/grayscale/">the preview page</a>. The theme is open source, and you can use it for any purpose, personal or commercial.</p>
-                <p>The Jekyll version is brought to you by <a href="https://github.com/jeromelachaud">Jerome Lachaud</a></p>
-                <p>This theme features stock photos by <a href="http://gratisography.com/">Gratisography</a> along with a custom Google Maps skin courtesy of <a href="http://snazzymaps.com/">Snazzy Maps</a>.</p>
-                <p>Grayscale includes full HTML, CSS, and custom JavaScript files along with LESS files for easy customization.</p>
-            </div>
+      <!-- Map Section -->
+
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <div id="map"></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4">
+        <div id="variable-select" style="padding: 20px;">
+          <select id = "variable">
+            <option value="Orlando">Orlando</option>
+            <option value="Nigeria_2016">Nigeria</option>
+            <option value="Bruxelles">Bruxelles</option>
+            <option value="Istanbul">Istanbul</option>
+            <option value="Pakistan">Pakistan</option>
+          </select>
         </div>
-    </section>
-        <!-- Download Section -->
-    <section id="download" class="content-section text-center">
-        <div class="download-section">
-            <div class="container">
-                <div class="col-lg-8 col-lg-offset-2">
-                    <h2>Download Grayscale</h2>
-                    <p>You can download Grayscale for free on the preview page at Start Bootstrap.</p>
-                    <a href="http://startbootstrap.com/template-overviews/grayscale/" class="btn btn-default btn-lg">Visit Download Page</a>
-                </div>
-            </div>
-        </div>
-    </section>
-        <!-- Contact Section -->
-    <section id="contact" class="container content-section text-center">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2">
-                <h2>Contact</h2>
-                <p>Dolor reprehenderit repellendus, optio labore odio at tempore debitis nisi. Quasi debitis tenetur eaque molestias non porro odio sapiente.</p>
-                <p><a href="mailto:adrian.loewenstein@epfl.ch">adrian.loewenstein@epfl.ch</a>
-                </p>
-                <ul class="list-inline banner-social-buttons">
-                    
-                    <li>
-                        <a href="https://twitter.com/SBootstrap" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">twitter</span></a>
-                    </li>
-                    
-                    <li>
-                        <a href="" class="btn btn-default btn-lg"><i class="fa fa-facebook fa-fw"></i> <span class="network-name">facebook</span></a>
-                    </li>
-                    
-                    <li>
-                        <a href="http://stackoverflow.com/questions/tagged/jekyll" class="btn btn-default btn-lg"><i class="fa fa-stack-overflow fa-fw"></i> <span class="network-name">stack-overflow</span></a>
-                    </li>
-                    
-                    <li>
-                        <a href="http://bitbucket.org/jekyll" class="btn btn-default btn-lg"><i class="fa fa-bitbucket fa-fw"></i> <span class="network-name">bitbucket</span></a>
-                    </li>
-                    
-                    <li>
-                        <a href="https://github.com/IronSummitMedia/startbootstrap" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">github</span></a>
-                    </li>
-                    
-                </ul>
-            </div>
-        </div>
-    </section>
-        <!-- Map Section -->
-    <div id="LeMap" style="position: relative;  height: 50%;" ></div>
+        <div id="legend"></div>
+      </div>
+
+    </div>
+  </div>
 
         <!-- Footer -->
     <footer>
@@ -160,18 +128,23 @@
 
     <!-- MAP LIBRARIES : -->
     <!--  D3 -->
-    <script src="/js/d3.min.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
 
     <!-- TopoJson -->
-    <script src="/js/topojson.min.js"></script>
+    <script src="https://d3js.org/topojson.v2.min.js"></script>
 
-    <!-- DataMaps -->
-    <script src="/js/datamaps.world.min.js"></script>
+    <!-- Scale -->
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 
-    <!-- My Map scripts -->
-    <script src="/js/basicmap.js"></script>
+    <!-- <script src="/js/d3-geomap/vendor/d3.geomap.dependencies.min.js"></script>
+    <script src="/js/d3-geomap/js/d3.geomap.min.js"></script>-->
+    <script src="/js/d3-legend.min.js"></script>
 
-    
+        <!-- My Map scripts -->
+    <link href="/js/d3-geomap/css/d3.geomap.css" rel="stylesheet">
+    <script src="/I-Measurement/case1map.js"></script>
+
+
 
     </body>
 </html>
