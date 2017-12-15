@@ -22,10 +22,12 @@ d3.json("/I-Measurement/measurement.json", function(all_data) {
 */
 
 
-var svgMap = d3.select("#map").attr("width","80%").attr("margin","0 auto")
+var svgMap = d3.select("#map") //.attr("width","80%").attr("margin","0 auto")
   .append("svg")
-  .attr("width",width)
-  .attr("height",height);
+  .attr("width","100%")
+  .append("g");
+  //.attr("width",width)
+  //.attr("height",height);
 
 
 var projection = d3.geoMercator()
@@ -71,11 +73,12 @@ function updateMap(variableSelected) {
 
   create_scale(variableSelected);
 
+
   d3.json("/topojson/world/countries.json", function(error, world) {
     if (error) throw error;
-    var valueById = {};
-          svgMap.append("g")
-          .selectAll("path")
+          // remove old elements
+          svgMap.selectAll("path").remove();
+          svgMap.selectAll("path")
           .data(topojson.feature(world, world.objects.units).features)
           .enter().append("path")
           .attr("d", path)
@@ -93,14 +96,15 @@ function updateMap(variableSelected) {
           .on('mouseout', function(d, i) {
                   d3.select(this).style('fill-opacity', 1.0);
               }
-            )
+            );
 
 
 
 
-    // remove old elements
-    svgMap.exit().remove();
+
+
   });
+
 
 }
 
@@ -140,3 +144,12 @@ d3.select("#variable")
     //updateLegend(variableName);
     updateMap(variableName);
 });
+
+d3.select(window)
+    		.on("resize", sizeChange);
+
+function sizeChange() {
+	    d3.select("g").attr("transform", "scale(" + $(".container").width()/900 + ")");
+	    $("svg").height($(".container").width()*0.618);
+      console.log($(".container").width());
+	}
