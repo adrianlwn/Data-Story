@@ -4,7 +4,13 @@ var color_scale;
 var width = 1080,
     height = 520;
 
-var dropped_countries = ['ATA','FRA']
+var fill_opacity_normal = 1,
+    fill_opacity_highlight = 0.5;
+
+var width_line_normal = 0.7,
+    width_line_highlight = 1.5;
+
+var dropped_countries = ["ATA"]
 
 var q = d3.queue()
 q.defer(d3.json,"/I-Measurement/measurement.json")
@@ -31,8 +37,8 @@ var svgMap = d3.select("#map") //.attr("width","80%").attr("margin","0 auto")
 
 
 var projection = d3.geoMercator()
-  .scale(155)
-  .center([0, 30 ])
+  .scale(130)
+  .center([0, 60 ])
   .rotate([-10,0]);
 
 
@@ -41,8 +47,7 @@ var path = d3.geoPath()
 
 
 function fill_color(d,variableSelected) {
-  if (d.id in dropped_countries) {
-    console.log(d.id);
+  if (  dropped_countries.indexOf(d.id) != -1 ) {
     return null
   }
   var data_event = all_data[variableSelected];
@@ -57,14 +62,17 @@ function create_scale(variableSelected) {
   console.log(tweets);
   color_scale = d3.scaleLog()
     .domain([d3.quantile(tweets,0.95), d3.quantile(tweets,1)])
-    .range(['orange', 'red']);
+    .range(['black', 'red']);
   console.log(color_scale(6000));
 };
+
+
 function strocke_width(d) {
-  if (d.id == 'ATA') {
-    return null
+  if (dropped_countries.indexOf(d.id) != -1) {
+    console.log(d.id);
+    return "0"
   }
-  return "0.5"
+  return width_line_normal
 };
 
 
@@ -86,26 +94,22 @@ function updateMap(variableSelected) {
           .style("fill",  function(d) {return fill_color(d,variableSelected)}
             )
           .style("stroke", "white")
-          .style("stroke-width", function(d) {strocke_width(d)}
+          .style("stroke-width", function(d) {return strocke_width(d)}
             )
           .on('mouseover', function(d, i) {
                 //d3.select(this).style('fill', 'black');
-                d3.select(this).style('fill-opacity', 0.5);
+                d3.select(this).style('fill-opacity', fill_opacity_highlight);
+                d3.select(this).style('stroke-width', width_line_highlight);
               }
             )
           .on('mouseout', function(d, i) {
-                  d3.select(this).style('fill-opacity', 1.0);
+                  d3.select(this).style('stroke-width', width_line_normal);
+                  d3.select(this).style('fill-opacity', fill_opacity_normal);
+
               }
             );
 
-
-
-
-
-
   });
-
-
 }
 
 
@@ -150,6 +154,6 @@ d3.select(window)
 
 function sizeChange() {
 	    d3.select("g").attr("transform", "scale(" + $(".container").width()/900 + ")");
-	    $("svg").height($(".container").width()*0.618);
+	    $("svg").height($(".container").width()*0.7);
       console.log($(".container").width());
 	}
