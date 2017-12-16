@@ -14,16 +14,16 @@ var dropped_countries = ["ATA"]
 
 // Tooltip :
 
-var tooltip1 = d3.select("#map1").append("div")
+var tooltip2 = d3.select("#map2").append("div")
     .attr("class", "mytooltip")
     .style("display", "none");
 
 // Map
 
-var svg1 = d3.select("#map1") //.attr("width","80%").attr("margin","0 auto")
+var svg2 = d3.select("#map2") //.attr("width","80%").attr("margin","0 auto")
   .append("svg")
   .attr("width","100%")
-var svgMap1 = svg1.append("g");
+var svgMap2 = svg2.append("g");
 
 var projection = d3.geoMercator()
   .scale(130)
@@ -34,7 +34,7 @@ var path = d3.geoPath()
   .projection(projection);
 
 // Legend :
-var svgLegend1 = svg1.append("g").attr("class", "legendJenks")
+var svgLegend2 = svg2.append("g").attr("class", "legendJenks")
   .attr("transform", "translate(60,"+$ (".container").width()*0.45 +")");
 
 function diplay_scale() {
@@ -43,7 +43,7 @@ function diplay_scale() {
     .labelFormat(d3.format(".2f"))
     .labels(mylabels)
     .scale(color_scale);
-    svgLegend1.call(legend);
+    svgLegend2.call(legend);
 }
 
 
@@ -107,7 +107,7 @@ function strocke_width(d) {
 
 
 
-function updateMap(variableSelected,normalized) {
+function updateMap2(variableSelected,normalized) {
   var mylabels;
   var path_json;
   var raw_data;
@@ -130,8 +130,8 @@ function updateMap(variableSelected,normalized) {
   d3.json("/topojson/world/countries.json", function(error, world) {
     if (error) throw error;
           // remove old elements
-          svgMap1.selectAll("path").remove();
-          svgMap1.selectAll("path")
+          svgMap2.selectAll("path").remove();
+          svgMap2.selectAll("path")
           .data(topojson.feature(world, world.objects.units).features)
           .enter().append("path")
           .attr("d", path)
@@ -145,23 +145,23 @@ function updateMap(variableSelected,normalized) {
                 d3.select(this).style("stroke", "FloralWhite")
                   .style("fill",  function(d) {
                         return d3.rgb(fill_color(all_data,d,variableSelected,normalized)).brighter(0.1).toString() });
-                tooltip1.style("display", "inline");
+                tooltip2.style("display", "inline");
               })
           .on('mousemove',function(d,i) {
                 var coordinates = d3.mouse(this.parentNode)
-                tooltip1.style("left", (coordinates[0] * $(".container").width()/900 + 19) + "px")
+                tooltip2.style("left", (coordinates[0] * $(".container").width()/900 + 19) + "px")
                         .style("top", (coordinates[1] * $(".container").width()/900 - 70 ) + "px");
-                tooltip1.select("h5").remove();
-                tooltip1.selectAll("h6").remove();
-                tooltip1.append("h5").text(all_data['name'][d.id])
-                tooltip1.append("h6").text("Tweets : "+ all_raw_data[variableSelected][d.id])
-                tooltip1.append("h6").text("Population : "+ all_raw_data['POP'][d.id])
+                tooltip2.select("h5").remove();
+                tooltip2.selectAll("h6").remove();
+                tooltip2.append("h5").text(all_data['name'][d.id])
+                tooltip2.append("h6").text("Tweets : "+ all_raw_data[variableSelected][d.id])
+                tooltip2.append("h6").text("Population : "+ all_raw_data['POP'][d.id])
           })
           .on('mouseout', function(d, i) {
                   d3.select(this)//.style('stroke-width', width_line_normal)
                     .style("fill",  function(d) {return fill_color(all_data,d,variableSelected,normalized)})
                     .style("stroke", "FloralWhite");
-                  tooltip1.style("display", "none");
+                  tooltip2.style("display", "none");
               }
             );
             diplay_scale()
@@ -171,31 +171,31 @@ function updateMap(variableSelected,normalized) {
 }
 
 // select variable for which to display a legend
-d3.select("#event1")
+d3.select("#event2")
   .on("change", function() {
-    var variableName = document.getElementById("event1").value;
-    var normalized = document.getElementById("normalized1").value;
+    var variableName = document.getElementById("event2").value;
+    var normalized = document.getElementById("normalized2").value;
 
     //updateLegend(variableName);
-    updateMap(variableName,normalized);
+    updateMap2(variableName,normalized);
 });
 
-d3.select("#normalized1")
+d3.select("#normalized2")
   .on("change", function() {
-    var variableName = document.getElementById("event1").value;
-    var normalized = document.getElementById("normalized1").value;
+    var variableName = document.getElementById("event2").value;
+    var normalized = document.getElementById("normalized2").value;
     //updateLegend(variableName);
-    updateMap(variableName,normalized);
+    updateMap2(variableName,normalized);
 });
 
 d3.select(window)
-    		.on("resize", sizeChange);
+    		.on("resize", sizeChange2);
 
-function sizeChange() {
-	    d3.select("g").attr("transform", "scale(" + $(".container").width()/900 + ")");
+function sizeChange2() {
+	    svgMap2.select("g").attr("transform", "scale(" + $(".container").width()/900 + ")");
 	    $("svg").height($(".container").width()*0.7);
-      svgLegend1.attr("transform", "translate(100,"+ $(".container").width()*0.45 +")");
+      svgLegend2.attr("transform", "translate(100,"+ $(".container").width()*0.45 +")");
 
 	};
 
-  updateMap("Orlando",'tweet_normalized');
+  updateMap2("Charlie-Hebdo",'tweet_normalized');

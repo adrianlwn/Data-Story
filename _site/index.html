@@ -27,7 +27,6 @@
 </head>
 
     <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top" onload="sizeChange()">
-
      <!-- Navigation -->
     <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
         <div class="container">
@@ -81,19 +80,54 @@
         </div>
     </header>
 
-      <!-- Map Section -->
+    <div class="container">
+
+  <div class="row">
+    <h2>Introduction</h2>
+    <p align="justify">
+      In past, the main source of information for people was their local newspaper,
+      their radio or television newscast or even natural conversation.
+      Information could take days to propagate in the whole world and then only few
+      topics where selected and broadcasted by journalists. Because of that the awareness
+      of people to world events was very limited, and it was virtually impossible to quantify
+      or qualify the level of reaction to a specific event.
+    </p>
+    <p align="justify">
+      Since then, we have seen the rise of Internet and Social Medias. The world has become so
+      connected that people can virtually be aware of everything happening on the planet at any moment.
+      As there is no limits to the availability of information anymore, one could think that people's
+      awareness would have expanded. But it seems that people still feel only touched by events
+      that are physically close or the ones where the victims are socially or culturally close.
+      The <strong>awareness level</strong> might be linked to the empathy a country could have for another one.
+    </p>
+    <p>
+      <strong>Question :</strong> Can we predict awareness to specific events in different countries around the globe ? Can we model the awareness using cultural metrics or simply using distance metrics between countries?
+    </p>
+  </div>
 
 
-  <div class="container">
+  <div class="row">
+    <h2>I. Measuring awareness with tweets</h2>
+
+    <p>
+      By using twitter
+    </p>
+  </div>
+  <div class="row">
+    <h3>I.1. Case Study 1 - Events of similar amplitude </h3>
+  </div>
+
+    <!-- Map Section -->
+
     <div class="row">
       <div class="col-lg-12">
-        <div id="map"></div>
+        <div id="map1"></div>
       </div>
     </div>
     <div class="row">
-      <div class="col-sm-4">
+      <div class="col-sm-2">
         <div id="variable-select" style="padding: 20px;">
-          <select id = "variable">
+          <select id = "event1">
             <option value="Orlando">Orlando</option>
             <option value="Nigeria_2016">Nigeria</option>
             <option value="Bruxelles">Bruxelles</option>
@@ -104,8 +138,56 @@
         <div id="legend"></div>
       </div>
 
+      <div class="col-sm-2">
+        <div id="variable-select" style="padding: 20px;">
+          <select id = "normalized1">
+            <option value="tweet_normalized">Normalized By Tweets</option>
+            <option value="natural">Not Normalized</option>
+          </select>
+        </div>
+        <div id="legend"></div>
+      </div>
+
     </div>
+
+
+  <div class="row">
+    <h3>I.2. Case Study 2 - Strong unbalance in Reactions </h3>
   </div>
+
+    <!-- Map Section -->
+
+    <div class="row">
+      <div class="col-lg-12">
+        <div id="map2"></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <div id="variable-select" style="padding: 20px;">
+          <select id = "event2">
+            <option value="Charlie-Hebdo">Charlie Hebdo</option>
+            <option value="Nigeria_2015">Nigeria</option>
+            <option value="Lebanon">Lebanon</option>
+          </select>
+        </div>
+        <div id="legend"></div>
+      </div>
+
+      <div class="col-sm-2">
+        <div id="variable-select" style="padding: 20px;">
+          <select id = "normalized2">
+            <option value="tweet_normalized">Normalized By Tweets</option>
+            <option value="natural">Not Normalized</option>
+          </select>
+        </div>
+        <div id="legend"></div>
+      </div>
+
+    </div>
+
+
+</div>
 
         <!-- Footer -->
     <footer>
@@ -136,13 +218,17 @@
     <!-- Scale -->
     <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 
-    <!-- <script src="/js/d3-geomap/vendor/d3.geomap.dependencies.min.js"></script>
-    <script src="/js/d3-geomap/js/d3.geomap.min.js"></script>-->
+    <script src="https://unpkg.com/simple-statistics@5.2.0/dist/simple-statistics.js"></script>
+
+    <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.3/d3-legend.js"></script>
+
     <script src="/js/d3-legend.min.js"></script>
 
         <!-- My Map scripts -->
-    <link href="/js/d3-geomap/css/d3.geomap.css" rel="stylesheet">
     <script src="/I-Measurement/case1map.js"></script>
+    <script src="/I-Measurement/case2map.js"></script>
 
 
 

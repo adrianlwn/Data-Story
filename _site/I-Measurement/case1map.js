@@ -1,6 +1,5 @@
 
-var all_data;
-var color_scale;
+// Global Variables :
 var width = 1080,
     height = 520;
 
@@ -12,64 +11,95 @@ var width_line_normal = 0.7,
 
 var dropped_countries = ["ATA"]
 
-var q = d3.queue()
-q.defer(d3.json,"/I-Measurement/measurement.json")
-q.await(function(error, results) {
-      if (error) throw error;
-      all_data = results;
-      // Initial display of the map
-      updateMap("Nigeria_2015");
-    });
-/*
-d3.json("/I-Measurement/measurement.json", function(all_data) {
-  console.log(data);
-  return data
-});
-*/
 
+// Tooltip :
 
-var svgMap = d3.select("#map") //.attr("width","80%").attr("margin","0 auto")
+var tooltip1 = d3.select("#map1").append("div")
+    .attr("class", "mytooltip")
+    .style("display", "none");
+
+// Map
+
+var svg1 = d3.select("#map1") //.attr("width","80%").attr("margin","0 auto")
   .append("svg")
   .attr("width","100%")
-  .append("g");
-  //.attr("width",width)
-  //.attr("height",height);
-
+var svgMap1 = svg1.append("g");
 
 var projection = d3.geoMercator()
   .scale(130)
   .center([0, 60 ])
   .rotate([-10,0]);
 
-
 var path = d3.geoPath()
   .projection(projection);
 
+// Legend :
+var svgLegend1 = svg1.append("g").attr("class", "legendJenks")
+  .attr("transform", "translate(60,"+$ (".container").width()*0.45 +")");
 
-function fill_color(d,variableSelected) {
+function diplay_scale() {
+
+  var legend = d3.legendColor()
+    .labelFormat(d3.format(".2f"))
+    .labels(mylabels)
+    .scale(color_scale);
+    svgLegend1.call(legend);
+}
+
+
+
+
+
+
+
+function fill_color(all_data,d,variableSelected,normalized) {
+  console.log(normalized);
   if (  dropped_countries.indexOf(d.id) != -1 ) {
-    return null
+    return 'FloralWhite'
   }
   var data_event = all_data[variableSelected];
+
+  if (data_event[d.id] == null){
+    return 'LightGrey'
+
+  }
   return color_scale(data_event[d.id])
 };
 
 // Function that creates a color scale
-function create_scale(variableSelected) {
+function create_scale(all_data,all_raw_data,variableSelected,normalized) {
 
   var data_event = all_data[variableSelected];
+  var data_raw_event = all_raw_data[variableSelected];
+
   var tweets = d3.values(data_event).sort(function(a, b){return a-b});
-  console.log(tweets);
-  color_scale = d3.scaleLog()
-    .domain([d3.quantile(tweets,0.95), d3.quantile(tweets,1)])
-    .range(['black', 'red']);
-  console.log(color_scale(6000));
+  var tweets_raw = d3.values(data_raw_event).sort(function(a, b){return a-b});
+
+  var k = 8;
+  jenks_sets = ss.ckmeans(tweets,k);
+
+  var total_length = 0;
+  var jenks_bins = new Array(k)
+  mylabels = new Array(k+1)
+  mylabels[0] = "Less than 0"
+  for (var i = 0; i < jenks_sets.length; i++) {
+    jenks_bins[i] = d3.min(jenks_sets[i])
+    mylabels[i+1] = tweets_raw[total_length+1] + " to " + tweets_raw[total_length + jenks_sets[i].length]
+    total_length = total_length + jenks_sets[i].length;
+  }
+  mylabels[k] = "More than " + d3.max(tweets_raw)
+
+  var jenks_colors = d3.schemeYlGnBu[k+1];
+
+  color_scale = d3.scaleThreshold()
+      .domain(jenks_bins)
+      .range(jenks_colors);
+  console.log(color_scale(0));
 };
 
 
 function strocke_width(d) {
   if (dropped_countries.indexOf(d.id) != -1) {
-    console.log(d.id);
     return "0"
   }
   return width_line_normal
@@ -77,76 +107,85 @@ function strocke_width(d) {
 
 
 
-function updateMap(variableSelected) {
+function updateMap(variableSelected,normalized) {
+  var mylabels;
+  var path_json;
+  var raw_data;
+  var all_data;
+  var jenks_sets;
 
-  create_scale(variableSelected);
 
+  var path_normalized_json = "/I-Measurement/measurement_norm.json";
+  var path_json = "/I-Measurement/measurement.json";
+  if (normalized == 'tweet_normalized'){
+    var path_output_json = path_normalized_json;
+  }
+  else {
+    var path_output_json = path_json
+  }
+  d3.json(path_json, function(error, all_raw_data) {
+  d3.json(path_output_json, function(error, all_data) {
+  create_scale(all_data,all_raw_data,variableSelected,normalized);
 
   d3.json("/topojson/world/countries.json", function(error, world) {
     if (error) throw error;
           // remove old elements
-          svgMap.selectAll("path").remove();
-          svgMap.selectAll("path")
+          svgMap1.selectAll("path").remove();
+          svgMap1.selectAll("path")
           .data(topojson.feature(world, world.objects.units).features)
           .enter().append("path")
           .attr("d", path)
           .attr("class", "country")
-          .style("fill",  function(d) {return fill_color(d,variableSelected)}
+          .style("fill",  function(d) {return fill_color(all_data,d,variableSelected,normalized)}
             )
-          .style("stroke", "white")
+          .style("stroke", "FloralWhite")
           .style("stroke-width", function(d) {return strocke_width(d)}
             )
           .on('mouseover', function(d, i) {
-                //d3.select(this).style('fill', 'black');
-                d3.select(this).style('fill-opacity', fill_opacity_highlight);
-                d3.select(this).style('stroke-width', width_line_highlight);
-              }
-            )
+                d3.select(this).style("stroke", "FloralWhite")
+                  .style("fill",  function(d) {
+                        return d3.rgb(fill_color(all_data,d,variableSelected,normalized)).brighter(0.1).toString() });
+                tooltip1.style("display", "inline");
+              })
+          .on('mousemove',function(d,i) {
+                var coordinates = d3.mouse(this.parentNode)
+                tooltip1.style("left", (coordinates[0] * $(".container").width()/900 + 19) + "px")
+                        .style("top", (coordinates[1] * $(".container").width()/900 - 70 ) + "px");
+                tooltip1.select("h5").remove();
+                tooltip1.selectAll("h6").remove();
+                tooltip1.append("h5").text(all_data['name'][d.id])
+                tooltip1.append("h6").text("Tweets : "+ all_raw_data[variableSelected][d.id])
+                tooltip1.append("h6").text("Population : "+ all_raw_data['POP'][d.id])
+          })
           .on('mouseout', function(d, i) {
-                  d3.select(this).style('stroke-width', width_line_normal);
-                  d3.select(this).style('fill-opacity', fill_opacity_normal);
-
+                  d3.select(this)//.style('stroke-width', width_line_normal)
+                    .style("fill",  function(d) {return fill_color(all_data,d,variableSelected,normalized)})
+                    .style("stroke", "FloralWhite");
+                  tooltip1.style("display", "none");
               }
             );
-
-  });
+            diplay_scale()
+          });
+        });
+      });
 }
-
-
-function updateLegend(variableSelected) {
-    // bind data
-    var ordinal = d3.scaleOrdinal()
-      .domain(codes[variableSelected].keys)
-      .range(codes[variableSelected].values);
-
-    svgLegend.append("g")
-      .attr("class", "legendOrdinal")
-      .attr("transform", "translate(20,20)");
-
-    var legendOrdinal = d3.legendColor()
-        .shapePadding(10)
-        .orient("vertical")
-        .shapeWidth(30)
-        .shapeHeight(10)
-        .scale(ordinal)
-        .labels(codes[variableSelected].labels)
-        .title(codes[variableSelected].title);
-
-    svgLegend.select(".legendOrdinal")
-      .call(legendOrdinal);
-
-    // remove old elements
-    svgLegend.exit().remove();
-}
-// generate initial legend
-//updateLegend("var1");
 
 // select variable for which to display a legend
-d3.select("#variable")
+d3.select("#event1")
   .on("change", function() {
-    var variableName = document.getElementById("variable").value;
+    var variableName = document.getElementById("event1").value;
+    var normalized = document.getElementById("normalized1").value;
+
     //updateLegend(variableName);
-    updateMap(variableName);
+    updateMap(variableName,normalized);
+});
+
+d3.select("#normalized1")
+  .on("change", function() {
+    var variableName = document.getElementById("event1").value;
+    var normalized = document.getElementById("normalized1").value;
+    //updateLegend(variableName);
+    updateMap(variableName,normalized);
 });
 
 d3.select(window)
@@ -155,5 +194,8 @@ d3.select(window)
 function sizeChange() {
 	    d3.select("g").attr("transform", "scale(" + $(".container").width()/900 + ")");
 	    $("svg").height($(".container").width()*0.7);
-      console.log($(".container").width());
-	}
+      svgLegend1.attr("transform", "translate(100,"+ $(".container").width()*0.45 +")");
+
+	};
+
+  updateMap("Orlando",'tweet_normalized');

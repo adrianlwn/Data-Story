@@ -6,7 +6,7 @@ description: "Can we predict awareness to specific events in different countries
 
 # Color settings (hex-codes without the leading hash-tag)
 color:
-  primary-dark: '#000000'
+  primary-dark: 'FloralWhite '
   links: '#219ab3'
 
 # Footer settings
