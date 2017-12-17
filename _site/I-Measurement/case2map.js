@@ -135,11 +135,11 @@ function updateMap2(variableSelected,normalized) {
           .attr("class", "country")
           .style("fill",  function(d) {return fill_color2(all_data,d,variableSelected,normalized,color_scale)}
             )
-          .style("stroke", "FloralWhite")
+          .style("stroke", "LightGrey")
           .style("stroke-width", function(d) {return strocke_width2(d)}
             )
           .on('mouseover', function(d, i) {
-                d3.select(this).style("stroke", "FloralWhite")
+                d3.select(this).style("stroke", "LightGrey")
                   .style("fill",  function(d) {
                         return d3.rgb(fill_color2(all_data,d,variableSelected,normalized,color_scale)).brighter(0.1).toString() });
                 tooltip2.style("display", "inline");
@@ -157,7 +157,7 @@ function updateMap2(variableSelected,normalized) {
           .on('mouseout', function(d, i) {
                   d3.select(this)//.style('stroke-width', width_line_normal)
                     .style("fill",  function(d) {return fill_color2(all_data,d,variableSelected,normalized,color_scale)})
-                    .style("stroke", "FloralWhite");
+                    .style("stroke", "LightGrey");
                   tooltip2.style("display", "none");
               }
             );
@@ -186,4 +186,4 @@ d3.select("#normalized2")
 });
 
 
-  updateMap2("Orlando",'tweet_normalized');
+  updateMap2("Charlie-Hebdo",'tweet_normalized');
