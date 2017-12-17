@@ -37,22 +37,23 @@ var path = d3.geoPath()
 var svgLegend2 = svg2.append("g").attr("class", "legendJenks")
   .attr("transform", "translate(60,"+$ (".container").width()*0.45 +")");
 
-function diplay_scale() {
+function diplay_scale2(color_scale) {
+  mylabels = new Array(jenks_sets.length+1)
+  var form = d3.format(",.2r")
+  mylabels[0] = "Less than " + form(d3.min(jenks_sets[0]))
+  for (var i = 0; i < jenks_sets.length; i++) {
+    mylabels[i+1] = form(d3.min(jenks_sets[i]))  + " to " + form(d3.max(jenks_sets[i]))
+  }
+  mylabels[jenks_sets.length] = "More than " + form(d3.max( jenks_sets[jenks_sets.length-1]))
 
   var legend = d3.legendColor()
-    .labelFormat(d3.format(".2f"))
     .labels(mylabels)
     .scale(color_scale);
     svgLegend2.call(legend);
 }
 
 
-
-
-
-
-
-function fill_color(all_data,d,variableSelected,normalized) {
+function fill_color2(all_data,d,variableSelected,normalized,color_scale) {
   console.log(normalized);
   if (  dropped_countries.indexOf(d.id) != -1 ) {
     return 'FloralWhite'
@@ -67,38 +68,29 @@ function fill_color(all_data,d,variableSelected,normalized) {
 };
 
 // Function that creates a color scale
-function create_scale(all_data,all_raw_data,variableSelected,normalized) {
+function create_scale2(all_data,variableSelected,normalized) {
+  k = 8;
 
   var data_event = all_data[variableSelected];
-  var data_raw_event = all_raw_data[variableSelected];
-
   var tweets = d3.values(data_event).sort(function(a, b){return a-b});
-  var tweets_raw = d3.values(data_raw_event).sort(function(a, b){return a-b});
 
-  var k = 8;
   jenks_sets = ss.ckmeans(tweets,k);
 
   var total_length = 0;
   var jenks_bins = new Array(k)
-  mylabels = new Array(k+1)
-  mylabels[0] = "Less than 0"
+
   for (var i = 0; i < jenks_sets.length; i++) {
     jenks_bins[i] = d3.min(jenks_sets[i])
-    mylabels[i+1] = tweets_raw[total_length+1] + " to " + tweets_raw[total_length + jenks_sets[i].length]
-    total_length = total_length + jenks_sets[i].length;
   }
-  mylabels[k] = "More than " + d3.max(tweets_raw)
 
   var jenks_colors = d3.schemeYlGnBu[k+1];
-
-  color_scale = d3.scaleThreshold()
+  return d3.scaleThreshold()
       .domain(jenks_bins)
       .range(jenks_colors);
-  console.log(color_scale(0));
 };
 
 
-function strocke_width(d) {
+function strocke_width2(d) {
   if (dropped_countries.indexOf(d.id) != -1) {
     return "0"
   }
@@ -113,6 +105,11 @@ function updateMap2(variableSelected,normalized) {
   var raw_data;
   var all_data;
   var jenks_sets;
+  var color_scale;
+
+
+  var form = d3.format(",")
+
 
 
   var path_normalized_json = "/I-Measurement/measurement_norm.json";
@@ -125,7 +122,7 @@ function updateMap2(variableSelected,normalized) {
   }
   d3.json(path_json, function(error, all_raw_data) {
   d3.json(path_output_json, function(error, all_data) {
-  create_scale(all_data,all_raw_data,variableSelected,normalized);
+  color_scale = create_scale2(all_data,variableSelected,normalized);
 
   d3.json("/topojson/world/countries.json", function(error, world) {
     if (error) throw error;
@@ -136,15 +133,15 @@ function updateMap2(variableSelected,normalized) {
           .enter().append("path")
           .attr("d", path)
           .attr("class", "country")
-          .style("fill",  function(d) {return fill_color(all_data,d,variableSelected,normalized)}
+          .style("fill",  function(d) {return fill_color2(all_data,d,variableSelected,normalized,color_scale)}
             )
           .style("stroke", "FloralWhite")
-          .style("stroke-width", function(d) {return strocke_width(d)}
+          .style("stroke-width", function(d) {return strocke_width2(d)}
             )
           .on('mouseover', function(d, i) {
                 d3.select(this).style("stroke", "FloralWhite")
                   .style("fill",  function(d) {
-                        return d3.rgb(fill_color(all_data,d,variableSelected,normalized)).brighter(0.1).toString() });
+                        return d3.rgb(fill_color2(all_data,d,variableSelected,normalized,color_scale)).brighter(0.1).toString() });
                 tooltip2.style("display", "inline");
               })
           .on('mousemove',function(d,i) {
@@ -154,17 +151,17 @@ function updateMap2(variableSelected,normalized) {
                 tooltip2.select("h5").remove();
                 tooltip2.selectAll("h6").remove();
                 tooltip2.append("h5").text(all_data['name'][d.id])
-                tooltip2.append("h6").text("Tweets : "+ all_raw_data[variableSelected][d.id])
-                tooltip2.append("h6").text("Population : "+ all_raw_data['POP'][d.id])
+                tooltip2.append("h6").text("Tweets : "+ form(all_raw_data[variableSelected][d.id]))
+                tooltip2.append("h6").text("Population : "+ form(all_raw_data['POP'][d.id]))
           })
           .on('mouseout', function(d, i) {
                   d3.select(this)//.style('stroke-width', width_line_normal)
-                    .style("fill",  function(d) {return fill_color(all_data,d,variableSelected,normalized)})
+                    .style("fill",  function(d) {return fill_color2(all_data,d,variableSelected,normalized,color_scale)})
                     .style("stroke", "FloralWhite");
                   tooltip2.style("display", "none");
               }
             );
-            diplay_scale()
+            diplay_scale2(color_scale)
           });
         });
       });
@@ -188,14 +185,5 @@ d3.select("#normalized2")
     updateMap2(variableName,normalized);
 });
 
-d3.select(window)
-    		.on("resize", sizeChange2);
 
-function sizeChange2() {
-	    svgMap2.select("g").attr("transform", "scale(" + $(".container").width()/900 + ")");
-	    $("svg").height($(".container").width()*0.7);
-      svgLegend2.attr("transform", "translate(100,"+ $(".container").width()*0.45 +")");
-
-	};
-
-  updateMap2("Charlie-Hebdo",'tweet_normalized');
+  updateMap2("Orlando",'tweet_normalized');
