@@ -1,56 +1,163 @@
 <div class="container">
 
-  <div class="row">
-    <h2>Introduction</h2>
+  <section id = "Introduction">
+    <div class="row">
+
+      <p align="justify">
+        In past, the main source of information for people was their local newspaper,
+        their radio or television newscast or even natural conversation.
+        Information could take days to propagate in the whole world and then only few
+        topics where selected and broadcasted by journalists. Because of that the awareness
+        of people to world events was very limited, and it was virtually impossible to quantify
+        or qualify the level of reaction to a specific event.
+      </p>
+      <p align="justify">
+        Since then, we have seen the rise of Internet and Social Medias. The world has become so
+        connected that people can virtually be aware of everything happening on the planet at any moment.
+        As there is no limits to the availability of information anymore, one could think that people's
+        awareness would have expanded. But it seems that people still feel only touched by events
+        that are physically close or events that touch people who are socially or culturally close.
+        The <strong> awareness or reaction level</strong> in some sense would be linked to the empathy a country could have for another one.
+      </p>
+      <p>
+        <strong>Question :</strong> Can we predict awareness to specific events in
+        different countries around the globe ? Can we model the awareness and predict reaction on social media using cultural and proximity metrics between countries?
+      </p>
+    </div>
+
+  </section>
+
+  <section id = "Tweets">
+    <div class="row">
+
+      <h2>Estimating awareness through hashtags</h2>
+
+      <p align="justify">
+        Over the past few years Twitter has become a plateform where people all over
+        the world express themselves. Hashtags are prevalent on Twitter and have become
+        more and more common place in various social networks over the past few years.
+        When referring to major events there are always specific Hashtags
+        which pop up in a multitude of languages and with various spellings therefore
+        demonstrating that there are people from various origins which react to a given event.
+      </p>
+
+      <div class="image_tweets" >
+          <img src = "../img/Nigeria_2016_hashtags.png" style="max-width:100%;width:auto;height:auto;" align="center" id = "hasthags_birdy">
+      </div>
+
+
+      <p align="justify">
+        By using Twitter the idea was to try to observe global trends regarding events
+         which objectively should generate similar levels of reactions worldwide. But
+         how can we define similar events? How can we choose events so that they may
+         be objectively comparable? </br></br>
+
+         Choosing events similar in nature is already a good start towards selecting events.
+         It is also important that the impact of the selected event on the population
+         generate sufficient reactions both in-house with the potential of generating
+         reactions world-wide. We then need to ask ourselves in recent times what has
+         generated the biggest buzz?  </br></br>
+
+         More often than not people react to events which
+         have an impact on people's lives, on their safety which is why terrorist
+         related events are interesting for our study. One would imagine that the more
+         people are injured, the higher the reaction. Therefore, in order to ensure
+         that we have enough tweets we selected events in different countries which
+         had a large number of civilian casualties. For comparison's sake, we also
+        selected a number of events of different magnitude around a different time
+        period.  </br></br>
+      </p>
+
+      <div class="image_tweets" >
+          <img src = "../img/events_img.png" style="max-width:90%;width:auto;height:auto;" align="center" id = "hasthags_birdy">
+      </div>
+
+      <p align="justify">
+         To account for the fluctuation of activity on twitter over the different years
+         the events were selected to be in the same overall timeframe. The tweets were
+         then acquired using relevant hashtags for an entire week following the event.
+
+      </p>
+    </div>
+    </section>
+
+    <section id = "Tweets">
+      <div class="row">
+      <h2>Geolocating Tweets And Measuring Reactions</h2>
+
+
+      <p align="justify">
+         Selecting events and scaping the tweets may have been a challenge, but one
+         of the biggest ones to face was that of actually determining where the tweets
+         came from. Besides the fact that locations are not always provided, the locations
+         are input manually. Anybody is free to put anything they want and that
+         often leads to locations which are completely absurd!
+      </p>
+
+      <div class="image_tweets" >
+          <img src = "../img/Hashtags__locations_transparent.png" style="max-width:90%;width:auto;height:auto;" align="center" id = "hasthags_birdy">
+      </div>
+
+
+      <p align="justify">
+         That is why it was important to create a robust mapping which would be able to
+         correctly map the largest number of locations possible. To do so we relied on
+         three levels of mapping.
+               </p>
+         <ol>
+         <li align="justify">A first level where we map the country names and capitals in different languages and with multiple spellings to the ISO2 country code </li>
+         <li align="justify">A second level where we map the top 20'000 cities in the world names and capitals to the ISO2 country code</li>
+         <li align="justify">A final level where we take the GEONAMES database to map all the cities in
+            the world to their respective countries. The importance of this mapping lies in the fact that cities with the same names
+            are selected based on population. Therefore given a city, the output will be the country corresponding to the city with
+            the largest population.
+           </li>
+         </ol>
+
+      </div>
+
+      <div class="row">
+      <p align="justify">
+      So how does this mapping work? Once each of the cities with the different name
+      variants were linked to their respective country the important steps towards
+      identifying the location are illustrated as follows.
+    </p>
+
+    <div class="image_tweets" >
+        <img src = "../img/geolocalisation.png" style="max-width:90%;width:auto;height:auto;" align="center" id = "hasthags_birdy">
+    </div>
+
     <p align="justify">
-      In past, the main source of information for people was their local newspaper,
-      their radio or television newscast or even natural conversation.
-      Information could take days to propagate in the whole world and then only few
-      topics where selected and broadcasted by journalists. Because of that the awareness
-      of people to world events was very limited, and it was virtually impossible to quantify
-      or qualify the level of reaction to a specific event.
-    </p>
-    <p align="justify">
-      Since then, we have seen the rise of Internet and Social Medias. The world has become so
-      connected that people can virtually be aware of everything happening on the planet at any moment.
-      As there is no limits to the availability of information anymore, one could think that people's
-      awareness would have expanded. But it seems that people still feel only touched by events
-      that are physically close or the ones where the victims are socially or culturally close.
-      The <strong>awareness level</strong> might be linked to the empathy a country could have for another one.
-    </p>
-    <p>
-      <strong>Question :</strong> Can we predict awareness to specific events in different countries around the globe ? Can we model the awareness using cultural metrics or simply using distance metrics between countries?
-    </p>
-  </div>
+    So, how many tweets were we actually able to geolocate overall? Considering only those for which
+    we initially had a location 
+  </p>
+
+    </div>
 
 
-  <div class="row">
-    <h2>I. Measuring awareness with tweets</h2>
+    <div class="row">
+      <h4>Events of similar amplitude </h4>
+    </div>
 
-    <p>
-      By using twitter
-    </p>
-  </div>
-  <div class="row">
-    <h3>I.1. Case Study 1 - Events of similar amplitude </h3>
-  </div>
+    {% include map1.html %}
 
-  {% include map1.html %}
+    <div class="row">
+      <h4>Strong unbalance in Reactions </h4>
+    </div>
 
-  <div class="row">
-    <h3>I.2. Case Study 2 - Strong unbalance in Reactions </h3>
-  </div>
+    {% include map2.html %}
 
-  {% include map2.html %}
+   </section>
+  <section id = "Modelling Awareness">
+    <div class="row">
+      <h2> Modelling the Reactions</h2>
 
-  <div class="row">
-    <h2>II. Metrics - Modeling the awareness</h2>
-    <p align="justify">
-      Blah Blah Blah Metrics.
-    </p>
+      <p align="justify">
+        Blah Blah Blah Metrics.
+      </p>
 
 
-
+  </section>
 
 
 </div>
