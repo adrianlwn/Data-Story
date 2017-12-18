@@ -30,7 +30,7 @@
   <section id = "Tweets">
     <div class="row">
 
-      <h2>Estimating awareness through hashtags</h2>
+      <h2>Estimating reactions and awareness through hashtags</h2>
 
       <p align="justify">
         Over the past few years Twitter has become a plateform where people all over
@@ -128,62 +128,106 @@
     </div>
 
     <p align="justify">
-    So, how many tweets were we actually able to geolocate overall? Considering only those for which
+    In the end, how many tweets were we actually able to geolocate overall? Considering only those for which
     we initially had a location and inspite all the absurdities found, we were able to gather quite
-    a few tweets per event but as we will quickly realise, there are inequalities in reactions between
+    a few tweets per event but as we will quickly realize, there are inequalities in reactions between
     the different events.
-  </p>
+    </p>
+
+
+      <div class="image_tweets" >
+          <img src = "../img/event_reactions.png" style="max-width:90%;width:auto;height:auto;" align="center" id = "hasthags_birdy">
+      </div>
 
 
   <p align="justify">
-  Regardless of the discrepancies in reactions, looking at the events in Nigeria we can see that the
-  reaction increases with the amplitude of the event. The massacre which lead to over 200 deaths generated
-  almost 10 times more tweets than the shooting which happend a year later. But this depends largely on the
-    event. As we can see, Charlie Hebdo is the perfect example of an extreme reaction to an event with an objectively
-    small number of minor casualties.
-
-</p>
-
-
-    <div class="image_tweets" >
-        <img src = "../img/event_reactions.png" style="max-width:90%;width:auto;height:auto;" align="center" id = "hasthags_birdy">
-    </div>
-
-    <p align="justify">
-
-    Regardless, we see that in most cases the locations are given around 50% of the time by
+    </br>
+    We see that in most cases the locations are given around 50% of the time by
     the country name or capital. The only time where that is not the case is
-    for the event in the United States. This probably stems from the fact that Americans
+    for the event in the United States. This most likely stems from the fact that Americans
     most probably relate to their state or town than people in other countries around the world.
     Another interesting thing we can see is that there are very few tweets with locations
     which are not geolocated in the end. A few examples of those were provided in the
-    word cloud above.
+    word cloud above. </br> </br>
 
   </p>
 
-    </div>
+  <h4>Visualizing Reactions To Different Events </h4>
+  </div>
 
+  <p align="justify">
+    </br>
+    In the following map we can visualize the number of tweets containing hashtags related
+    to specific events. The events are given by the red circles. Cliking on one will load
+    the corresponding map. The map can display either the raw number of tweets or the
+    relative reaction obtained through normalization by the estimated baseline twitter
+    activity.
 
-    <div class="row">
-      <h4>Events of similar amplitude </h4>
-    </div>
+  </p>
 
-    {% include map1.html %}
+  {% include map1.html %}
+
 
     <div class="row">
       <h4>Strong unbalance in Reactions </h4>
+
+
+      <p align="justify">
+        </br>
+        Looking at the reactions themselves, for the events in Nigeria we can see that the
+        reaction increases with the amplitude of the event. The massacre which lead to over 200 deaths generated
+        almost 10 times more tweets than the shooting which happend a year later. But this depends largely on the
+        event. As we can see, Charlie Hebdo is the perfect example of an extreme reaction to an event with an objectively
+        small number of casualties. </br> </br>
+
+        We can visualize this by using the same scale for all events. This highlights the imbalance
+        of reactions between the different events.
+      </p>
+
+      {% include map2.html %}
+
+
+
     </div>
 
-    {% include map2.html %}
+
 
    </section>
+
+
+
+
   <section id = "Modelling Awareness">
     <div class="row">
       <h2> Modelling the Reactions</h2>
 
       <p align="justify">
-        Blah Blah Blah Metrics.
+        </br>
+        How can we predict reactions? People often react to events that happen closeby.
+        Given the visualization of the reactions it does not seem as though distance metrics on
+        their own would suffice. That is why cultural metrics are also important to take into
+        account.Therefore, can a combination of cultural and proximity metrics be used as predictors?
+        Can we create a model which, given the country where an event occurs, would be able to predict the reactions
+        worldwide with respect to the baseline twitter activity?
+        </br></br>
+
+        </br></br>
+
+
+        <strong> General Metrics </strong>
+        Countries can be characterized 
+        </br></br>
+
+        <strong> Distance Metrics </strong>
+
+
+        </br></br>
+        <strong> Cultural Metrics </strong>
+
+        </br></br>
+
       </p>
+
       {% include metrics1.html %}
 
   </section>
