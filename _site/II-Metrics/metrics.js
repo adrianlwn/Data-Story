@@ -141,6 +141,7 @@ function updateMap3(variableSelected,selected_country) {
 
   d3.json(path_json, function(error, all_raw_data) {
   d3.json(path_metrics_json, function(error, metrics_data) {
+    console.log(error);
     all_data = metrics_data[variableSelected][selected_country]
     color_scale = create_scale3(all_data,variableSelected,selected_country);
 
@@ -155,7 +156,7 @@ function updateMap3(variableSelected,selected_country) {
           .attr("class", "country")
           .style("fill",  function(d) {return fill_color3(all_data,d,variableSelected,selected_country,color_scale)}
             )
-          .style("stroke", "LightGrey")
+          .style("stroke", 'LightGrey' )
           .style("stroke-width", function(d) {return strocke_width3(d)}
             )
           .on('mouseover', function(d, i) {
