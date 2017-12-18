@@ -12,7 +12,7 @@
 body {
     width: 100%;
     height: 100%;
-    font-family: "Avenir","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: "Roboto","Helvetica Neue",Helvetica,Arial,sans-serif;
     color: #666;
     background-color: FloralWhite ;
 }
@@ -30,7 +30,7 @@ h5,
 h6 {
     margin: 25px 25px 35px;
     text-transform: uppercase;
-    font-family: "Avenir","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: "Raleway","Helvetica Neue",Helvetica,Arial,sans-serif;
     font-weight: 700;
     letter-spacing: 1px;
 }
@@ -70,7 +70,7 @@ a:focus {
     margin-bottom: 0;
     border-bottom: 1px solid rgba(255,255,255,.3);
     text-transform: uppercase;
-    font-family: "Avenir","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: "Roboto","Helvetica Neue",Helvetica,Arial,sans-serif;
     background-color: FloralWhite ;
 }
 
@@ -285,7 +285,7 @@ a:focus {
 
 .btn {
     text-transform: uppercase;
-    font-family: Avenir,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: Roboto,"Helvetica Neue",Helvetica,Arial,sans-serif;
     font-weight: 400;
     -webkit-transition: all .3s ease-in-out;
     -moz-transition: all .3s ease-in-out;
@@ -369,7 +369,7 @@ body {
 
   position: absolute;
   text-align: center;
-  font-family: "Avenir","Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-family: "Roboto","Helvetica Neue",Helvetica,Arial,sans-serif;
   width: 270px;
   height: 80px;
   padding: 8px;
