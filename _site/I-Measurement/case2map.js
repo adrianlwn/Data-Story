@@ -40,21 +40,29 @@ var svgLegend2 = svg2.append("g").attr("class", "legendJenks")
 function diplay_scale2(color_scale) {
   mylabels = new Array(jenks_sets.length+1)
   var form = d3.format(",.2r")
-  mylabels[0] = "Less than " + form(d3.min(jenks_sets[0]))
+  mylabels[0] = form(d3.min(jenks_sets[0])) + " or less"
   for (var i = 0; i < jenks_sets.length; i++) {
-    mylabels[i+1] = form(d3.min(jenks_sets[i]))  + " to " + form(d3.max(jenks_sets[i]))
+
+    var min = form(d3.min(jenks_sets[i]))
+    var max = form(d3.max(jenks_sets[i]))
+    if (max != min ) {
+      mylabels[i+1] = min  + " to " + max
+    }
+    else {
+        mylabels[i+1] = min
+    }
+
   }
-  mylabels[jenks_sets.length] = "More than " + form(d3.max( jenks_sets[jenks_sets.length-1]))
+  mylabels[jenks_sets.length] = form(d3.min( jenks_sets[jenks_sets.length-1])) + " and more"
 
   var legend = d3.legendColor()
     .labels(mylabels)
-    .scale(color_scale);
+    .scale(color_scale)
     svgLegend2.call(legend);
 }
 
 
 function fill_color2(all_data,d,variableSelected,normalized,color_scale) {
-  console.log(normalized);
   if (  dropped_countries.indexOf(d.id) != -1 ) {
     return 'FloralWhite'
   }
@@ -69,11 +77,14 @@ function fill_color2(all_data,d,variableSelected,normalized,color_scale) {
 
 // Function that creates a color scale
 function create_scale2(all_data,variableSelected,normalized) {
-  k = 8;
+  k = 8
+  var all_data_event = new Array(0)
+  for (var i = 0; i < event_information.length; i++) {
+    all_data_event = all_data_event.concat(d3.values(all_data[event_information[i].name]));
+  }
+  console.log(all_data_event);
 
-  var data_event = all_data[variableSelected];
-  var tweets = d3.values(data_event).sort(function(a, b){return a-b});
-
+  var tweets = d3.values(all_data_event).sort(function(a, b){return a-b});
   jenks_sets = ss.ckmeans(tweets,k);
 
   var total_length = 0;
@@ -128,6 +139,9 @@ function updateMap2(variableSelected,normalized) {
     if (error) throw error;
           // remove old elements
           svgMap2.selectAll("path").remove();
+          svgMap2.selectAll("circle").remove();
+
+          // The map
           svgMap2.selectAll("path")
           .data(topojson.feature(world, world.objects.units).features)
           .enter().append("path")
@@ -147,7 +161,7 @@ function updateMap2(variableSelected,normalized) {
           .on('mousemove',function(d,i) {
                 var coordinates = d3.mouse(this.parentNode)
                 tooltip2.style("left", (coordinates[0] * $(".container").width()/900 + 19) + "px")
-                        .style("top", (coordinates[1] * $(".container").width()/900 - 70 ) + "px");
+                        .style("top", (coordinates[1] * $(".container").width()/900 - 80 ) + "px");
                 tooltip2.select("h5").remove();
                 tooltip2.selectAll("h6").remove();
                 tooltip2.append("h5").text(all_data['name'][d.id])
@@ -162,28 +176,55 @@ function updateMap2(variableSelected,normalized) {
               }
             );
             diplay_scale2(color_scale)
+            // Add events on the map :
+            svgMap2.selectAll("circle")
+                .data(event_information).enter()
+                .append("circle")
+                .attr("cx", function (d) { return  projection([d.location[1],d.location[0]])[0] })
+                .attr("cy", function (d) { return  projection([d.location[1],d.location[0]])[1] })
+                .attr("r", "2px")
+                .attr("name", function (d) {return d.name})
+                .attr("selected",function (d) {
+                  if (variableSelected == d.name) { return "True" ;}
+                  else { return "False" ;  }})
+                .attr("fill", function (d) {
+                  if (variableSelected == d.name) { return "Red" ;}
+                  else { return "rgba(0,0,0,0)" ;  }
+                })
+                .attr("fill-opacity",1)
+                .attr("stroke",function (d) {
+                  if (variableSelected == d.name) { return "Red " ;}
+                  else { return "Red" ;  }
+                })
+                .on('mouseover', function(d, i) {
+                  d3.select(this)
+                    //.style("stroke", "LightGrey");
+                    .style("r", "5px");
+                })
+                .on('mouseout', function(d, i) {
+                  d3.select(this)
+                    //.style("stroke", "LightGrey");
+                    .style("r","2px");
+                })
+                .on('click', function(d){
+
+                    updateMap2(d.name,d3.select('input[name="normalized2"]:checked').attr('value'));
+
+                })
           });
         });
       });
 }
 
-// select variable for which to display a legend
-d3.select("#event2")
-  .on("change", function() {
-    var variableName = document.getElementById("event2").value;
-    var normalized = document.getElementById("normalized2").value;
 
-    //updateLegend(variableName);
-    updateMap2(variableName,normalized);
-});
 
-d3.select("#normalized2")
+d3.selectAll('#radio2').selectAll('input')
   .on("change", function() {
-    var variableName = document.getElementById("event2").value;
-    var normalized = document.getElementById("normalized2").value;
+    var normalized = d3.select(this).attr('value');
+    var event_selected = svgMap2.selectAll("circle").filter( function(d) { return d3.select(this).attr("selected") == "True" ;}).attr("name");
     //updateLegend(variableName);
-    updateMap2(variableName,normalized);
+    updateMap2(event_selected,normalized);
 });
 
 
-  updateMap2("Charlie-Hebdo",'tweet_normalized');
+  updateMap2("Orlando",'natural');

@@ -235,6 +235,7 @@
     </div>
 
     <p align="justify">
+
     Regardless, we see that in most cases the locations are given around 50% of the time by
     the country name or capital. The only time where that is not the case is
     for the event in the United States. This probably stems from the fact that Americans
@@ -253,35 +254,22 @@
     </div>
 
       <!-- Map Section -->
+  <div class="row">
+    <div class="col-sm-10">
+      <div id="radio1">
+    <form>
+      <input type="radio" name="normalized1" value="natural" checked style="margin: 0 5px 0 15px ;"> Not Normalized
+      <input type="radio" name="normalized1" value="tweet_normalized" style="margin:  0 5px 0 15px ;"> Normalized By Average Number of Tweets
+    </form>
+  </div>
 
+  </div>
+
+  </div>
     <div class="row">
       <div class="col-lg-12">
         <div id="map1"></div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-2">
-        <div id="variable-select" style="padding: 20px;">
-          <select id = "event1">
-            <option value="Orlando">Orlando</option>
-            <option value="Nigeria_2016">Nigeria</option>
-            <option value="Bruxelles">Bruxelles</option>
-            <option value="Istanbul">Istanbul</option>
-            <option value="Pakistan">Pakistan</option>
-          </select>
-        </div>
-        <div id="legend"></div>
-      </div>
-
-      <div class="col-sm-2">
-        <div id="variable-select" style="padding: 20px;">
-          <select id = "normalized1">
-            <option value="tweet_normalized">Normalized By Tweets</option>
-            <option value="natural">Not Normalized</option>
-          </select>
-        </div>
-      </div>
-
     </div>
 
 
@@ -290,33 +278,22 @@
     </div>
 
       <!-- Map Section -->
+  <!-- Map Section -->
+  <div class="row">
+    <div class="col-sm-10">
+      <div id="radio2">
+    <form>
+      <input type="radio" name="normalized2" value="natural" checked style="margin: 0 5px 0 15px ;"> Not Normalized
+      <input type="radio" name="normalized2" value="tweet_normalized" style="margin:  0 5px 0 15px ;"> Normalized By Average Number of Tweets
+    </form>
+    </div>
+  </div>
+</div>
 
     <div class="row">
       <div class="col-lg-12">
         <div id="map2"></div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-2">
-        <div id="variable-select" style="padding: 20px;">
-          <select id = "event2">
-            <option value="Charlie-Hebdo">Charlie Hebdo</option>
-            <option value="Nigeria_2015">Nigeria</option>
-            <option value="Lebanon">Lebanon</option>
-          </select>
-        </div>
-        <div id="legend"></div>
-      </div>
-
-      <div class="col-sm-2">
-        <div id="variable-select" style="padding: 20px;">
-          <select id = "normalized2">
-            <option value="tweet_normalized">Normalized By Tweets</option>
-            <option value="natural">Not Normalized</option>
-          </select>
-        </div>
-      </div>
-
     </div>
 
 
@@ -328,6 +305,29 @@
       <p align="justify">
         Blah Blah Blah Metrics.
       </p>
+        <!-- Map Section -->
+
+  <div class="row">
+    <div class="col-sm-10">
+      <div id="radio3">
+    <form>
+      <input type="radio" name="metric" value="language" checked style="margin: 0 5px 0 15px ;"> Language
+      <input type="radio" name="metric" value="real_distance" style="margin:  0 5px 0 15px ;"> Real Distance
+      <input type="radio" name="metric" value="hop_distance" style="margin:  0 5px 0 15px ;"> Hop Distance
+      <input type="radio" name="metric" value="religion_distance" style="margin:  0 5px 0 15px ;"> Religion Distance
+
+    </form>
+  </div>
+
+  </div>
+
+  </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div id="metric"></div>
+      </div>
+    </div>
+    
 
 
   </section>
@@ -376,6 +376,8 @@
 
     <script src="/I-Measurement/case1map.js"></script>
     <script src="/I-Measurement/case2map.js"></script>
+    <script src="/II-Metrics/metrics.js"></script>
+
     <script src="/I-Measurement/resize_change.js"></script>
 
 
