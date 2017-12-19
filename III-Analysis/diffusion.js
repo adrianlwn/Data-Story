@@ -197,7 +197,7 @@ function updateMap4(variableSelected,selected_country) {
 
           var coordinatesLegend= [80,350]
           //var full_name = event_information.filter(function(d){ if (d.name == variableSelected) {return d.full_name}})[0]['full_name']
-          lengendMap4.selectAll("h5").remove()
+          /*lengendMap4.selectAll("h5").remove()
           lengendMap4.selectAll("h6").remove()
           lengendMap4.selectAll("p").remove()
           lengendMap4.selectAll("br").remove()
@@ -211,7 +211,7 @@ function updateMap4(variableSelected,selected_country) {
 
           lengendMap4.append('h6').text('Unit : ' + diffusion_information[variableSelected]['unit'] );
 
-
+          */
 
           // Map Title :
           var coordinatesTitle = [420,15]
@@ -261,7 +261,7 @@ function updateMap4(variableSelected,selected_country) {
                   var distance_val = "INF"
                 }
 
-                tooltip4.append("h6").text("Distance to " + all_raw_data['name'][selected_country] + " : "+ distance_val + ' '+ diffusion_information[variableSelected]['unit'])
+                tooltip4.append("h6").text("Diffusion from " + all_raw_data['name'][selected_country] + " : "+ distance_val + ' '+ diffusion_information[variableSelected]['unit'])
 
                 if (variableSelected == 'language'){
                   var language_list = all_raw_data['languages'][d.id][0]
@@ -310,11 +310,11 @@ d3.selectAll('#radio4').selectAll('input')
   .on("change", function() {
     var metric_selected = d3.select(this).attr('value');
     console.log(metric_selected);
-    updateMap4(metric_selected,'USA');
+    updateMap4(metric_selected,'TUR');
 });
 
 var color_scale4;
 
 
 
-updateMap4("graph_diffusion",'USA');
+updateMap4("graph_diffusion",'TUR');
