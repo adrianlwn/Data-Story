@@ -254,7 +254,11 @@ function updateMap3(variableSelected,selected_country) {
                 if (all_data[d.id] != null ){
                   var distance_val = form(all_data[d.id])
 
-                } else {
+                } else if (variableSelected == 'neib_distance') {
+                  var distance_val = "0.0"
+
+                }
+                else {
                   var distance_val = "INF"
                 }
 
@@ -276,9 +280,14 @@ function updateMap3(variableSelected,selected_country) {
                   tooltip3.append("h6").text("Religions : " + religion_list)
 
                 }
+                else if (variableSelected == 'flight_distance') {
+                  tooltip3.selectAll("h6").remove()
+                  tooltip3.append("h6").text("Percentage of flights to " + all_raw_data['name'][selected_country] + " : "+ distance_val + ' '+ metrics_information[variableSelected]['unit'])
+
+                }
                 else if (variableSelected == 'neib_distance') {
                   tooltip3.selectAll("h6").remove()
-                  tooltip3.append("h6").text("Percentage of flight " + all_raw_data['name'][selected_country] + " : "+ distance_val + ' '+ metrics_information[variableSelected]['unit'])
+                  tooltip3.append("h6").text("Neighors' reaction to an event in " + all_raw_data['name'][selected_country] + " : "+ distance_val + ' '+ metrics_information[variableSelected]['unit'])
 
                 }
 
