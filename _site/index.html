@@ -427,7 +427,6 @@
          </br></br>
 
        </p>
-
          <!-- Map Section -->
 
   <div class="row">
@@ -453,7 +452,44 @@
     </div>
 
 
+
+       <h2> Creating the Graph and Using Diffusion to Predict Reactions</h2>
+
+       <p align="justify">
+       Given all of these metrics we created a graph linking all countries. The more
+       countries have attributes in common, the more likely they are to react to what
+       is going on. But how do we quantify that two countries share things in common?
+       Our original idea was to use what we see in recommender systems and topic detection
+       to find amongst all our features the ones which best link the countries together.
+       </p>
+
+
+
+
    </section>
+
+
+     <!-- Map Section -->
+
+  <div class="row">
+    <div class="col-sm-12">
+      <div id="radio4">
+    <form>
+      <input type="radio" name="metric" value="language" checked style="margin: 0 5px 0 15px ;"> Diffusion metric
+      <input type="radio" name="metric" value="column_name" checked style="margin: 0 5px 0 15px ;"> Other metric
+
+    </form>
+  </div>
+
+  </div>
+
+  </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div id="diffusion1"></div>
+      </div>
+    </div>
+
 
  <section id = "Conclusion">
    <div class="row">
@@ -462,7 +498,7 @@
 
      <p align="justify">
 
-      Twitter is inherently biased because it is a social media plateform. This
+     Twitter is inherently biased because it is a social media plateform. This
      implies that people are not necessarily subscribed or that they are active on
      network. In general social media is relatively new and tends to attract
      younger generations which are generally less aware about what is going on not
@@ -489,26 +525,6 @@
 
     </div>
 
-      <!-- Map Section -->
-
-  <div class="row">
-    <div class="col-sm-12">
-      <div id="radio4">
-    <form>
-      <input type="radio" name="metric" value="language" checked style="margin: 0 5px 0 15px ;"> Diffusion metric
-      <input type="radio" name="metric" value="column_name" checked style="margin: 0 5px 0 15px ;"> Other metric
-
-    </form>
-  </div>
-
-  </div>
-
-  </div>
-    <div class="row">
-      <div class="col-lg-12">
-        <div id="diffusion1"></div>
-      </div>
-    </div>
 
 
 
