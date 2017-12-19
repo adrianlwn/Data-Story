@@ -50,16 +50,16 @@
                         <a class="page-scroll" href="#Introduction">Introduction</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#Tweets">Hashtags For Awareness</a>
+                        <a class="page-scroll" href="#Tweets">Hashtags</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#Locate">Geolocations Tweets</a>
+                        <a class="page-scroll" href="#Locate">Geolocations</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#Modelling Awareness">Modelling Reactions</a>
+                        <a class="page-scroll" href="#Modelling">Modelling</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#Conclusion">Critical Assessment</a>
+                        <a class="page-scroll" href="#Conclusion">Assessment</a>
                     </li>
                 </ul>
             </div>
@@ -89,6 +89,7 @@
     <div class="container">
 
   <section id = "Introduction">
+    </br></br></br>
     <div class="row">
 
       <p align="justify">
@@ -117,11 +118,11 @@
 
   <section id = "Tweets">
     <div class="row">
-
+</br></br>
       <h2>Estimating reactions and awareness through hashtags</h2>
 
       <p align="justify">
-        Over the past few years Twitter has become a plateform where people all over
+        Over the past few years Twitter has become a platform where people all over
         the world express themselves. Hashtags are prevalent on Twitter and have become
         more and more common place in various social networks over the past few years.
         When referring to major events there are always specific Hashtags
@@ -169,8 +170,10 @@
     </div>
     </section>
 
-    <section id = "Tweets">
+    <section id = "Locate">
+
       <div class="row">
+         </br></br>
       <h2>Geolocating Tweets And Measuring Reactions</h2>
 
 
@@ -248,7 +251,7 @@
     to specific events. The events are given by the red circles. Cliking on one will load
     the corresponding map. The map can display either the raw number of tweets or the
     relative reaction obtained through normalization by the estimated baseline twitter
-    activity.
+    activity. This baseline consists in an average number of tweets acquired in one week per country.
 
   </p>
 
@@ -322,8 +325,9 @@
 
 
 
-   <section id = "Modelling Awareness">
+   <section id = "Modelling">
      <div class="row">
+       </br></br>
        <h2> Modelling the Reactions</h2>
 
        <p align="justify">
@@ -437,13 +441,7 @@
          event which occured somewhere around the globe. If an event occurs in Switzerland
          for example and looking at the relative importance metric, we can see that
          Italy would react more than Germany or France would.
-
-        </br></br>
-        Here we can choose to observe the diffusion using the same scale for all countries
-        or having a different scale per country. The scale per country is useful
-        to compare the predicted and estimated reaction levels whereas the unique scale
-        helps observe the differences in diffusion between events happening in different
-        countries.
+       </br></br>
 
        </p>
 
@@ -481,6 +479,13 @@
        Our original idea was to use what we see in recommender systems and topic detection
        to find amongst all our features the ones which best link the countries together.
        The results of this can be seen in the maps below.
+       </p>
+       <p align="justify">
+       Here we can choose to observe the diffusion using the same scale for all countries
+       or having a different scale per country. The scale per country is useful
+       to compare the predicted and estimated reaction levels whereas the unique scale
+       helps observe the differences in diffusion between events happening in different
+       countries.
        </p>
 
 </br></br>
@@ -522,7 +527,7 @@
 
  <section id = "Conclusion">
    <div class="row">
-
+</br></br>
      <h2>Critical Assessment</h2>
 
      <p align="justify">
@@ -532,9 +537,9 @@
        countries and predict the reactions towards specific events on social media.
        As we have shown the problem is far more complex than one would have hoped. </br></br>
 
-     Twitter is inherently biased because it is a social media plateform. This implies
-     that people are not necessarily subscribed to the network, and if they are
-     that they are active on network. In general social media is relatively new and
+     Twitter is inherently biased because it is a social media platform. This implies
+     that people are not necessarily registered to the network, and if they are
+     they might not be very active. In general social media is relatively new and
      tends to attract
      younger generations which are generally less aware about what is going on not
      only around the world but even in their immediate environment.</br></br>
@@ -557,7 +562,7 @@
 
 
     Our metrics are also imperfect and can difficultly model on their own a complex
-    system which is highly linked to social and behavioural aspects.
+    system which is highly linked to social, behavioural, cultural and historicalaspects.
 
 
     Furthermore, creating a model requires much more data than what we had at hand,
@@ -587,6 +592,11 @@
         <!-- Footer -->
     <footer>
         <div class="container text-center">
+            <p>Made with <i class="fa fa-heart" aria-hidden="true"></i> for ADA </p>
+            <p>
+              Jordi <i class="fa fa-plus-circle" aria-hidden="true"></i> Laila <i class="fa fa-plus-circle" aria-hidden="true"></i> Adrian
+            </p>
+
             <p>Copyright &copy; Tweet Awareness 2017</p>
         </div>
     </footer>
