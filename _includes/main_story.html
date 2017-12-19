@@ -303,10 +303,26 @@
          </br></br>
 
        </p>
-
        {% include metrics1.html %}
 
+
+       <h2> Creating the Graph and Using Diffusion to Predict Reactions</h2>
+
+       <p align="justify">
+       Given all of these metrics we created a graph linking all countries. The more
+       countries have attributes in common, the more likely they are to react to what
+       is going on. But how do we quantify that two countries share things in common?
+       Our original idea was to use what we see in recommender systems and topic detection
+       to find amongst all our features the ones which best link the countries together.
+       </p>
+
+
+
+
    </section>
+
+
+   {% include diffusion1.html %}
 
  <section id = "Conclusion">
    <div class="row">
@@ -315,7 +331,7 @@
 
      <p align="justify">
 
-      Twitter is inherently biased because it is a social media plateform. This
+     Twitter is inherently biased because it is a social media plateform. This
      implies that people are not necessarily subscribed or that they are active on
      network. In general social media is relatively new and tends to attract
      younger generations which are generally less aware about what is going on not
@@ -342,7 +358,7 @@
 
     </div>
 
-    {% include diffusion1.html %}
+
 
 
      </p>
