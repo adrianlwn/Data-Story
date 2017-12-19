@@ -6,15 +6,15 @@ function sizeChange() {
         // Map1
         svgMap1.attr("transform", "scale(" + $(".container").width()/900 + ")");
         svg1.style("height",$(".container").width()*0.7)
-        svgLegend1.attr("transform", "translate(100,"+ $(".container").width()*0.45 +")");
+        svgLegend1.attr("transform", "translate(100,"+ $(".container").width()*0.51 +")");
         // Map2
   	    svgMap2.attr("transform", "scale(" + $(".container").width()/900 + ")");
         svg2.style("height",$(".container").width()*0.7)
-        svgLegend2.attr("transform", "translate(100,"+ $(".container").width()*0.45 +")");
+        svgLegend2.attr("transform", "translate(100,"+ $(".container").width()*0.51 +")");
 
         // Map3
         svgMap3.attr("transform", "scale(" + $(".container").width()/900 + ")");
         svg3.style("height",$(".container").width()*0.7)
-        svgLegend3.attr("transform", "translate(100,"+ $(".container").width()*0.45 +")");
+        svgLegend3.attr("transform", "translate(100,"+ ($(".container").width()*0.51 ) +")");
 
 	};

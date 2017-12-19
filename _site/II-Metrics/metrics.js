@@ -8,7 +8,44 @@ var fill_opacity_normal = 1,
 var width_line_normal = 0.7,
     width_line_highlight = 1.5;
 
-var dropped_countries = ["ATA"]
+var metrics_information = {
+  'language': {
+    'full_name' : 'Language Distance',
+    'unit' : '',
+    'description' : 'Distance based on the offical languages and their '
+  }, 'real_distance': {
+    'full_name' : 'Real Distance',
+    'unit' : 'km',
+    'description' : 'Real distance between centers of countries'
+  }, 'hop_distance': {
+    'full_name' : 'Hop Distance',
+    'unit' : 'hops',
+    'description' : 'Smallest number of borders to cross in order to reach a country'
+  }, 'flight_distance': {
+    'full_name' : 'Outbound flights',
+    'unit' : '%',
+    'description' : 'Percentage of all the flights of a country outbound to the selected country'
+  }, 'religion_distance': {
+    'full_name' : 'Religion Distance',
+    'unit' : '',
+    'description' : 'Religious Distance based on the proportions of religons per country'
+  },  'neib_distance': {
+    'full_name' : 'Neighbor Influence',
+    'unit' : '%',
+    'description' : 'Influence of the neigboring countries bases on their relative size'
+}}
+
+// Title Map :
+
+var lengendMap3 = d3.select("#metric").append("div")
+.attr("class", "mylegend");
+
+
+
+// Title Map :
+
+var titleMap3 = d3.select("#metric").append("div")
+.attr("class", "mytitle");
 
 
 // Tooltip :
@@ -34,7 +71,7 @@ var path = d3.geoPath()
 
 // Legend :
 var svgLegend3 = svg3.append("g").attr("class", "legendJenks")
-  .attr("transform", "translate(60,"+$ (".container").width()*0.45 +")");
+  .attr("transform", "translate(60,"+$ (".container").width()*0.45  +")");
 
 function  diplay_scale3(color_scale)
  {
@@ -96,7 +133,10 @@ function create_scale3(all_data,variableSelected,selected_country) {
   var total_length = 0;
 
   var jenks_colors = Array.from(d3.schemeYlOrBr[k+1]);
-  jenks_colors.reverse()
+  if (variableSelected != 'flight_distance'){
+    jenks_colors.reverse()
+
+  }
 
   var jenks_bins = new Array(0)
   for (var i = 0; i < jenks_sets.length; i++) {
@@ -149,6 +189,39 @@ function updateMap3(variableSelected,selected_country) {
     if (error) throw error;
           // remove old elements
           svgMap3.selectAll("path").remove();
+
+          var coordinatesLegend= [80,350]
+          //var full_name = event_information.filter(function(d){ if (d.name == variableSelected) {return d.full_name}})[0]['full_name']
+          lengendMap3.selectAll("h5").remove()
+          lengendMap3.selectAll("h6").remove()
+          lengendMap3.selectAll("p").remove()
+          lengendMap3.selectAll("br").remove()
+
+
+          lengendMap3.style("left", (coordinatesLegend[0] * $(".container").width()/900 ) + "px")
+                  .style("top", (coordinatesLegend[1] * $(".container").width()/900 ) + "px")
+          lengendMap3.append('h6').text('Description');
+          lengendMap3.append('p').text(metrics_information[variableSelected]['description'])
+          lengendMap3.append('br')
+
+          lengendMap3.append('h6').text('Unit : ' + metrics_information[variableSelected]['unit'] );
+
+
+
+          // Map Title :
+          var coordinatesTitle = [420,15]
+          //var full_name = event_information.filter(function(d){ if (d.name == variableSelected) {return d.full_name}})[0]['full_name']
+          titleMap3.selectAll("h1").remove()
+          titleMap3.selectAll("h3").remove()
+
+          titleMap3.style("left", (coordinatesTitle[0] * $(".container").width()/900 ) + "px")
+                  .style("top", (coordinatesTitle[1] * $(".container").width()/900 ) + "px")
+
+          titleMap3.append('h1').append('h1').text(metrics_information[variableSelected]['full_name'])
+
+          titleMap3.append('h3').style("font-weight", "900").text('to ' +  all_raw_data['name'][selected_country] );
+
+
           svgMap3.selectAll("path")
           .data(topojson.feature(world, world.objects.units).features)
           .enter().append("path")
