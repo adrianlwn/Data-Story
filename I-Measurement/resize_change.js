@@ -17,4 +17,9 @@ function sizeChange() {
         svg3.style("height",$(".container").width()*0.7)
         svgLegend3.attr("transform", "translate(100,"+ ($(".container").width()*0.51 ) +")");
 
+        // Map4
+        svgMap4.attr("transform", "scale(" + $(".container").width()/900 + ")");
+        svg4.style("height",$(".container").width()*0.7)
+        svgLegend4.attr("transform", "translate(100,"+ ($(".container").width()*0.51 ) +")");
+
 	};

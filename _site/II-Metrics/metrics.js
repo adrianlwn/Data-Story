@@ -133,10 +133,7 @@ function create_scale3(all_data,variableSelected,selected_country) {
   var total_length = 0;
 
   var jenks_colors = Array.from(d3.schemeYlOrBr[k+1]);
-  if (variableSelected != 'flight_distance'){
-    jenks_colors.reverse()
 
-  }
 
   var jenks_bins = new Array(0)
   for (var i = 0; i < jenks_sets.length; i++) {
@@ -147,6 +144,11 @@ function create_scale3(all_data,variableSelected,selected_country) {
       jenks_sets.splice(i,1)
       jenks_colors.pop();
     }
+  }
+
+  if (variableSelected != 'flight_distance' && variableSelected != 'neib_distance'){
+    jenks_colors.reverse()
+
   }
 
 
@@ -249,12 +251,38 @@ function updateMap3(variableSelected,selected_country) {
 
                 tooltip3.append("h5").text(all_raw_data['name'][d.id]) // Country name
 
+                if (all_data[d.id] != null ){
+                  var distance_val = form(all_data[d.id])
+
+                } else {
+                  var distance_val = "INF"
+                }
+
+                tooltip3.append("h6").text("Distance to " + all_raw_data['name'][selected_country] + " : "+ distance_val + ' '+ metrics_information[variableSelected]['unit'])
+
                 if (variableSelected == 'language'){
-                  tooltip3.append("h6").text("Official Languages : " + all_raw_data['languages'][d.id])
+                  var language_list = all_raw_data['languages'][d.id][0]
+                  for (var i = 1; i < d3.min([6,all_raw_data['languages'][d.id].length]); i++) {
+                    language_list  = language_list + ', ' + all_raw_data['languages'][d.id][i]
+                  }
+                  tooltip3.append("h6").text("Languages : " + language_list)
 
                 }
+                else if (variableSelected == 'religion_distance') {
+                  var religion_list = all_raw_data['main_religions'][d.id][0]
+                  for (var i = 1; i < all_raw_data['main_religions'][d.id].length; i++) {
+                    religion_list  = religion_list + ', ' + all_raw_data['main_religions'][d.id][i]
+                  }
+                  tooltip3.append("h6").text("Religions : " + religion_list)
+
+                }
+                else if (variableSelected == 'neib_distance') {
+                  tooltip3.selectAll("h6").remove()
+                  tooltip3.append("h6").text("Percentage of flight " + all_raw_data['name'][selected_country] + " : "+ distance_val + ' '+ metrics_information[variableSelected]['unit'])
+
+                }
+
                 else {
-                  tooltip3.append("h6").text("Distance to " + all_raw_data['name'][selected_country] + " : "+ form(all_data[d.id]))
 
                 }
           })
