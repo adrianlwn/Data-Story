@@ -101,16 +101,23 @@ function fill_color4(all_data,d,variableSelected,selected_country,color_scale4) 
 
 // Function that creates a color scale
 function create_scale4(all_data,variableSelected,selected_country) {
-  var countries = d3.keys(all_data[variableSelected])
-  console.log(countries);
-  var all_data_event = new Array(0)
-  for (var i = 0; i < countries.length; i++) {
-    all_data_event = all_data_event.concat(d3.values(all_data[variableSelected][countries[i]]));
-  }
-  console.log('LOL');
-  console.log(all_data_event)
+  console.log('IIXIXIXI');
+  console.log(all_data);
+  if (variableSelected != 'graph_diffusion_adapt') {
 
-  var data_event = all_data_event;
+    var countries = d3.keys(all_data['graph_diffusion'])
+    console.log(countries);
+    var all_data_event = new Array(0)
+    for (var i = 0; i < countries.length; i++) {
+      all_data_event = all_data_event.concat(d3.values(all_data['graph_diffusion'][countries[i]]));
+    }
+
+    var data_event = all_data_event;
+  }
+  else {
+    var data_event = all_data['graph_diffusion'][selected_country];
+  }
+
   var values_event = d3.values(data_event).sort(function(a, b){return a-b});
   all_data
   unique_values = new Array(0)
@@ -126,7 +133,7 @@ function create_scale4(all_data,variableSelected,selected_country) {
 
   var total_length = 0;
 
-  var jenks_colors = Array.from(d3.schemeYlOrBr[k+1]);
+  var jenks_colors = Array.from(d3.schemeYlGnBu[k+1]);
 
 
   var jenks_bins = new Array(0)
@@ -140,7 +147,7 @@ function create_scale4(all_data,variableSelected,selected_country) {
     }
   }
 
-  if (variableSelected != 'graph_diffusion' && variableSelected != 'others'){
+  if (variableSelected != 'graph_diffusion' && variableSelected != 'graph_diffusion_adapt'){
     jenks_colors.reverse()
 
   }
@@ -180,10 +187,21 @@ function updateMap4(variableSelected,selected_country) {
   d3.json(path_diffusions_json, function(error, diffusion_data) {
     console.log(error);
     console.log(diffusion_data);
-    all_data = diffusion_data[variableSelected][selected_country]
+
+    all_data = diffusion_data['graph_diffusion'][selected_country]
     console.log('color_scale4');
     console.log(color_scale4);
+    var defined_color
     if ( color_scale4 ) {
+      defined_color = 1
+    }
+    else {
+      defined_color = 0
+      color_scale_saved = create_scale4(diffusion_data,variableSelected,selected_country);
+      color_scale4 = color_scale_saved
+    }
+    if ( defined_color == 1 && variableSelected != 'graph_diffusion_adapt' ) {
+        color_scale4 = color_scale_saved
     } else {
       console.log('color_scale4_creation')
       color_scale4 = create_scale4(diffusion_data,variableSelected,selected_country);
@@ -222,7 +240,7 @@ function updateMap4(variableSelected,selected_country) {
           titleMap4.style("left", (coordinatesTitle[0] * $(".container").width()/900 ) + "px")
                   .style("top", (coordinatesTitle[1] * $(".container").width()/900 ) + "px")
 
-          titleMap4.append('h1').append('h1').text(diffusion_information[variableSelected]['full_name'])
+          titleMap4.append('h1').append('h1').text(diffusion_information['graph_diffusion']['full_name'])
 
           titleMap4.append('h3').style("font-weight", "900").text('from ' +  all_raw_data['name'][selected_country] );
 
@@ -256,38 +274,11 @@ function updateMap4(variableSelected,selected_country) {
 
                 if (all_data[d.id] != null ){
                   var distance_val = form(all_data[d.id])
-
                 } else {
                   var distance_val = "INF"
                 }
+                tooltip4.append("h6").text("Diffusion from " + all_raw_data['name'][selected_country] + " : "+ distance_val + ' '+ diffusion_information['graph_diffusion']['unit'])
 
-                tooltip4.append("h6").text("Diffusion from " + all_raw_data['name'][selected_country] + " : "+ distance_val + ' '+ diffusion_information[variableSelected]['unit'])
-
-                if (variableSelected == 'language'){
-                  var language_list = all_raw_data['languages'][d.id][0]
-                  for (var i = 1; i < d3.min([6,all_raw_data['languages'][d.id].length]); i++) {
-                    language_list  = language_list + ', ' + all_raw_data['languages'][d.id][i]
-                  }
-                  tooltip4.append("h6").text("Languages : " + language_list)
-
-                }
-                else if (variableSelected == 'religion_distance') {
-                  var religion_list = all_raw_data['main_religions'][d.id][0]
-                  for (var i = 1; i < all_raw_data['main_religions'][d.id].length; i++) {
-                    religion_list  = religion_list + ', ' + all_raw_data['main_religions'][d.id][i]
-                  }
-                  tooltip4.append("h6").text("Religions : " + religion_list)
-
-                }
-                else if (variableSelected == 'neib_distance') {
-                  tooltip4.selectAll("h6").remove()
-                  tooltip4.append("h6").text("Percentage of flight " + all_raw_data['name'][selected_country] + " : "+ distance_val + ' '+ diffusion_information[variableSelected]['unit'])
-
-                }
-
-                else {
-
-                }
           })
           .on('mouseout', function(d, i) {
                   d3.select(this)//.style('stroke-width', width_line_normal)
@@ -314,6 +305,7 @@ d3.selectAll('#radio4').selectAll('input')
 });
 
 var color_scale4;
+var color_scale_saved;
 
 
 
