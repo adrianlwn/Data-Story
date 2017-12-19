@@ -12,7 +12,7 @@ var metrics_information = {
   'language': {
     'full_name' : 'Language Distance',
     'unit' : '',
-    'description' : 'Distance based on the offical languages and their '
+    'description' : 'Distance based on the offical languages and their phylogenetic trees '
   }, 'real_distance': {
     'full_name' : 'Real Distance',
     'unit' : 'km',
