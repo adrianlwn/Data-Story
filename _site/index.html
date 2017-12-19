@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Tweet Awareness</title>
     <meta name="viewport" content="width=device-width">
-    <meta name="description" content="Can we predict awareness to specific events in different countries around the globe ? 
- Can we model the awareness using cultural metrics or simply using distance metrics between countries?">
+    <meta name="description" content="Can we model awareness to specific events in different countries around the globe ? 
+ Can we predict the levels of reactions on social media using cultural metrics or simply using distance metrics between countries?">
     <link rel="canonical" href="http://localhost:4000/">
 
     <!-- Custom CSS & Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
@@ -75,8 +75,8 @@
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
                         <h1 class="brand-heading">Tweet Awareness</h1>
-                        <p class="intro-text">Can we predict awareness to specific events in different countries around the globe ? 
- Can we model the awareness using cultural metrics or simply using distance metrics between countries?<br>
+                        <p class="intro-text">Can we model awareness to specific events in different countries around the globe ? 
+ Can we predict the levels of reactions on social media using cultural metrics or simply using distance metrics between countries?<br>
                         <a href="#about" class="btn btn-circle page-scroll">
                             <i class="fa fa-angle-double-down animated"></i>
                         </a>
@@ -103,7 +103,7 @@
       <p align="justify">
         Since then, we have seen the rise of Internet and Social Medias. The world has become so
         connected that people can virtually be aware of everything happening on the planet at any moment.
-        As there is no limits to the availability of information anymore, one could think that people's
+        As there are no limits to the availability of information anymore, one could think that people's
         awareness would have expanded. But it seems that people still feel only touched by events
         that are physically close or events that touch people who are socially or culturally close.
         The <strong> awareness or reaction level</strong> in some sense would be linked to the empathy a country could have for another one.
@@ -151,7 +151,7 @@
          have an impact on people's lives, on their safety which is why terrorist
          related events are interesting for our study. One would imagine that the more
          people are injured, the higher the reaction. Therefore, in order to ensure
-         that we have enough tweets we selected events in different countries which
+         that we have enough tweets, we selected events in different countries which
          had a large number of civilian casualties. For comparison's sake, we also
         selected a number of events of different magnitude around a different time
         period.  </br>
@@ -178,7 +178,7 @@
 
 
       <p align="justify">
-         Selecting events and scaping the tweets may have been a challenge, but one
+         Selecting events and scraping the tweets may have been a challenge, but one
          of the biggest ones to face was that of actually determining where the tweets
          came from. Besides the fact that locations are not always provided, the locations
          are input manually. Anybody is free to put anything they want and that
@@ -191,18 +191,22 @@
 
 
       <p align="justify">
+         </br>
          That is why it was important to create a robust mapping which would be able to
          correctly map the largest number of locations possible. To do so we relied on
          three levels of mapping.
                </p>
          <ol>
          <li align="justify">A first level where we map the country names and capitals in different languages and with multiple spellings to the ISO2 country code </li>
+</br>
          <li align="justify">A second level where we map the top 20'000 cities in the world names and capitals to the ISO2 country code</li>
+</br>
          <li align="justify">A final level where we take the GEONAMES database to map all the cities in
             the world to their respective countries. The importance of this mapping lies in the fact that cities with the same names
             are selected based on population. Therefore given a city, the output will be the country corresponding to the city with
             the largest population.
            </li>
+           </br>
          </ol>
 
       </div>
@@ -217,6 +221,7 @@
     <div class="image_tweets" >
         <img src = "../img/geolocalisation.png" style="max-width:90%;width:auto;height:auto;" align="center" id = "hasthags_birdy">
     </div>
+    </br>
 
     <p align="justify">
     In the end, how many tweets were we actually able to geolocate overall? Considering only those for which
@@ -233,13 +238,13 @@
 
   <p align="justify">
     </br>
-    We see that in most cases the locations are given around 50% of the time by
+    We see that in most cases the locations are given 50% of the time by
     the country name or capital. The only time where that is not the case is
     for the event in the United States. This most likely stems from the fact that Americans
     most probably relate to their state or town than people in other countries around the world.
-    Another interesting thing we can see is that there are very few tweets with locations
-    which are not geolocated in the end. A few examples of those were provided in the
-    word cloud above. </br> </br>
+    Another interesting thing we can see is that only 10% of tweets with locations
+    are not geolocated, mostly due to the absurd locations provided. A few examples of those were provided in the
+    word cloud above. </br>
 
   </p>
 
@@ -251,7 +256,7 @@
     to specific events. The events are given by the red circles. Cliking on one will load
     the corresponding map. The map can display either the raw number of tweets or the
     relative reaction obtained through normalization by the estimated baseline twitter
-    activity. This baseline consists in an average number of tweets acquired in one week per country.
+    activity. This baseline consists in an average number of tweets acquired over one week per country.
 
   </p>
 
@@ -354,7 +359,7 @@
        <h3> Distance Metrics </h3>
 
        <p align="justify">
-         As we mentioned previously, distance tends to play an important role in
+         Distance tends to play an important role in
          determining people's interest regarding a specific event. But there are several
          types of distances which can be considered when speaking of countries. The first
          and most evident is the <strong> birds-eye-view distance </strong> between the countries. This
@@ -363,35 +368,35 @@
          center of thees two countries is much larger than the distance between France and
          any of its neighboring countries.
 
-         </br>
+         </br></br>
          So what else could we consider to have a more representative representation
          of distance between the different countries? We came up with three other distance
          metrics which combined would be more complete.
 
 
        </br></br>
-         <strong> Relative Importance of Neighbors</strong> </br>
+         <strong> Relative Importance of Neighbors</strong> </br></br>
          To take into account the fact that two countries can be neighbors and still
          have a big distance between them we decided to create a metric which would give
          importance to countries which are direct neighbors. We also wanted to make sure
          to give each neighbor the importance it is due. For example France has
-         multiple countries at its border. But that does not mean that each of these
+         multiple countries at its border, but that does not mean that each of these
          countries are of similar importance. That is why we weighted this metric by
-         the size of the countries. Therefore a small neighboring country such as Luxemburg
+         the size of its neighbours. Therefore a small neighbouring country such as Luxemburg
          would have a smaller weight than Germany for example.
 
 
        </br></br>
-         <strong>Hop Distance</strong> </br>
+         <strong>Hop Distance</strong> </br></br>
          This second metric accounts not only for direct neighbors but also for the
-         smallest number of countries which would need to be traversed to connect any
+         smallest number of borders which would need to be traversed to connect any
          two countries in the world.
 
 
 
 
          </br></br>
-         <strong>Flight Routes</strong>  </br>
+         <strong>Flight Routes</strong>  </br></br>
          This last metric accounts for movement of populations between the different
          countries. The assumption is that the existence of flight routes is due to
          the fact that people exhibit a certain interest for the other country. The more
@@ -408,22 +413,22 @@
 
        <p align="justify">
 
-         People tend to feel close to people they can relate to, people who share similar
+         People tend to feel close to people they can relate to and who share similar
          values. One would therefore assume that people are interested in events that
          occur in areas where there are people that are culturally close to you. But how
          can you quantify cultural proximity?
 
          </br></br>
-         <strong>Languages</strong></br>
+         <strong>Languages</strong></br></br>
          Languages are representative of culture and most of the time, countries which
          speak the same language have a given proximity. However speaking or not speaking
          the same language is not sufficient to quantify proximity. Many languages are
          similar in the sense of understanding the other language, learning it, etc.
          That why we used phylogenetic trees to approximate Linguistic distances between
-         the different languages and compute a linguistic distance between the different countries.
+         the different languages and compute a corresponding linguistic distance between the different countries.
 
          </br></br>
-         <strong>Religions</strong></br>
+         <strong>Religions</strong></br></br>
          Religion relate to people's mentalities and affects the way people think.
          Religion can create bonds between different populations and countries and therefore
          have an impact on the awareness to events that happen in countries with the
@@ -439,7 +444,7 @@
        <p align="justify">
          For each of the metrics we wanted to visualize how countries would react to an
          event which occured somewhere around the globe. If an event occurs in Switzerland
-         for example and looking at the relative importance metric, we can see that
+         for example and looking at the relative importance of neighbors metric, we can see that
          Italy would react more than Germany or France would.
        </br></br>
 
@@ -481,7 +486,7 @@
        The results of this can be seen in the maps below.
        </p>
        <p align="justify">
-       Here we can choose to observe the diffusion using the same scale for all countries
+       Here give the choice of observing the diffusion using the same scale for all countries
        or having a different scale per country. The scale per country is useful
        to compare the predicted and estimated reaction levels whereas the unique scale
        helps observe the differences in diffusion between events happening in different
@@ -515,8 +520,9 @@
 
       <p align="justify">
       Looking at the graph we can see that there are many incoherences at the global
-      scale. For example when looking at what happens in Turkey, it is highly unlikely
-      that there be a reaciton of similar magnitude in Argentina and nowhere else in
+      scale. For example when looking at what happens in Turkey with the adaptative scale,
+      it is highly unlikely
+      that there be a reaction of similar magnitude in Argentina and nowhere else in
       the world. But even more concretely, this does not match the reaction levels
       of the tweets we have for the event in Istanbul.
       </p>
@@ -554,7 +560,8 @@
 
      The absence of reaction to an event on social media does not necessarily imply that
      people are not interested in what is going on. We assume that the proportion of people
-    who react to an event is always the same with respect to the overall number of tweeters</br></br>
+    who react to an event is always the same with respect to the overall number of tweeters but
+  there is no way to be sure.</br></br>
 
 
     Not having standardized locations required creating a mapping which in itself is
@@ -562,7 +569,7 @@
 
 
     Our metrics are also imperfect and can difficultly model on their own a complex
-    system which is highly linked to social, behavioural, cultural and historicalaspects.</br></br>
+    system which is highly linked to social, behavioural, cultural and historical aspects.</br></br>
 
 
     Furthermore, creating a model requires much more data than what we had at hand,
@@ -573,9 +580,9 @@
        our system than the ones we have currently in order to correclty predict what
        is going on especially since awareness does not necessarily imply reaction.
        Considering the problem on a smaller scale, for example at the level of a country
-       such as the United States or of a continent such as Europe may have lead to more
-       pertinent results as the complex inter-cultural factory would have been less
-       important.
+       such as the United States or of a continent such as Europe, may have lead to more
+       pertinent results as the complex inter-cultural factors would have been more similar
+       between the considered countries.
 
 
 

@@ -24,7 +24,7 @@ var metrics_information = {
   }, 'flight_distance': {
     'full_name' : 'Outbound flights',
     'unit' : '%',
-    'description' : 'Percentage of all the flights of a country outbound to the selected country'
+    'description' : 'Percentage of all the outbound flights of a country to the selected country'
   }, 'religion_distance': {
     'full_name' : 'Religion Distance',
     'unit' : '',
@@ -32,7 +32,7 @@ var metrics_information = {
   },  'neib_distance': {
     'full_name' : 'Neighbor Influence',
     'unit' : '%',
-    'description' : 'Influence of the neigboring countries bases on their relative size'
+    'description' : 'Reaction of neigboring countries based on the relative size of their neighbors'
 }}
 
 // Title Map :
@@ -316,9 +316,9 @@ d3.selectAll('#radio3').selectAll('input')
   .on("change", function() {
     var metric_selected = d3.select(this).attr('value');
     console.log(metric_selected);
-    updateMap3(metric_selected,'USA');
+    updateMap3(metric_selected,'CHE');
 });
 
 
 
-  updateMap3("language",'USA');
+  updateMap3("language",'CHE');

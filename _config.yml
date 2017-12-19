@@ -2,7 +2,7 @@
 title: Tweet Awareness
 email: adrian.loewenstein@epfl.ch
 url: https://tweet-awareness.eu
-description: "Can we predict awareness to specific events in different countries around the globe ? \n Can we model the awareness using cultural metrics or simply using distance metrics between countries?"
+description: "Can we model awareness to specific events in different countries around the globe ? \n Can we predict the levels of reactions on social media using cultural metrics or simply using distance metrics between countries?"
 
 # Color settings (hex-codes without the leading hash-tag)
 color:
