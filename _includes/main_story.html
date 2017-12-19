@@ -302,7 +302,21 @@
          similar religious backgrounds.
          </br></br>
 
+
+
        </p>
+
+       <h3>  Visualizing the Metrics </h3>
+
+       <p align="justify">
+         For each of the metrics we wanted to visualize how countries would react to an
+         event which occured somewhere around the globe. If an event occurs in Switzerland
+         for example and looking at the relative importance metric, we can see that
+         Italy would react more than Germany or France would.
+
+
+       </p>
+
        {% include metrics1.html %}
 
 
@@ -317,16 +331,22 @@
        The results of this can be seen in the maps below.
        </p>
 
+</br></br>
+{% include diffusion1.html %}
 
-
+</br></br>
 
       <p align="justify">
-      TODO : NMF; issues, explain random serach...
+      Looking at the graph we can see that there are many incoherences at the global
+      scale. For example when looking at what happens in Turkey, it is highly unlikely
+      that there be a reaciton of similar magnitude in Argentina and nowhere else in
+      the world. But even more concretely, this does not match the reaction levels
+      of the tweets we have for the event in Istanbul.
       </p>
 
    </section>
 
-{% include diffusion1.html %}
+
 
  <section id = "Conclusion">
    <div class="row">
@@ -375,6 +395,11 @@
        In general it would seem that we need much more complex pararmeters to describe
        our system than the ones we have currently in order to correclty predict what
        is going on especially since awareness does not necessarily imply reaction.
+       Considering the problem on a smaller scale, for example at the level of a country
+       such as the United States or of a continent such as Europe may have lead to more
+       pertinent results as the complex inter-cultural factory would have been less
+       important.
+
 
 
     </div>
