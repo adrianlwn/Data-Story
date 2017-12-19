@@ -453,23 +453,27 @@
 
 
 
-       <h2> Creating the Graph and Using Diffusion to Predict Reactions</h2>
+       <h2> Creating the Graph With Latent Dirichlet Allocation and Using Diffusion to Predict Reactions</h2>
 
        <p align="justify">
-       Given all of these metrics we created a graph linking all countries. The more
+       Given all of these metrics we wanted to create a graph linking all countries. The more
        countries have attributes in common, the more likely they are to react to what
        is going on. But how do we quantify that two countries share things in common?
        Our original idea was to use what we see in recommender systems and topic detection
        to find amongst all our features the ones which best link the countries together.
+       The results of this can be seen in the maps below.
        </p>
 
 
 
 
+      <p align="justify">
+      TODO : NMF; issues, explain random serach...
+      </p>
+
    </section>
 
-
-     <!-- Map Section -->
+  <!-- Map Section -->
 
   <div class="row">
     <div class="col-sm-12">
@@ -498,9 +502,15 @@
 
      <p align="justify">
 
-     Twitter is inherently biased because it is a social media plateform. This
-     implies that people are not necessarily subscribed or that they are active on
-     network. In general social media is relatively new and tends to attract
+       The goal of this project was to determine whether a set of simple metrics could
+       be used to create a model which would adequately represent the links between
+       countries and predict the reactions towards specific events on social media.
+       As we have shown the problem is far more complex than one would have hoped. </br></br>
+
+     Twitter is inherently biased because it is a social media plateform. This implies
+     that people are not necessarily subscribed to the network, and if they are
+     that they are active on network. In general social media is relatively new and
+     tends to attract
      younger generations which are generally less aware about what is going on not
      only around the world but even in their immediate environment.</br></br>
 
@@ -517,10 +527,21 @@
     who react to an event is always the same with respect to the overall number of tweeters</br></br>
 
 
-     Not having standardized locations required creating a mapping which in itself
-     is imperfect. </br></br>
+    Not having standardized locations required creating a mapping which in itself is
+    imperfect and implies loss of a given amount of data.
+
+
+    Our metrics are also imperfect and can difficultly model on their own a complex
+    system which is highly linked to social and behavioural aspects.
+
+
+    Furthermore, creating a model requires much more data than what we had at hand,
+    both in terms of number of tweets and in terms of events analyzed.
 
        For all of these reasons it was evident that creating a metric would be challenging.
+       In general it would seem that we need much more complex pararmeters to describe
+       our system than the ones we have currently in order to correclty predict what
+       is going on especially since awareness does not necessarily imply reaction.
 
 
     </div>
