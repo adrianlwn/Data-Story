@@ -10,10 +10,10 @@ var width_line_normal = 0.7,
 
 
 var diffusion_information = {
-  'language': {
-    'full_name' : 'Language Distance',
+  'graph_diffusion': {
+    'full_name' : 'Graph Diffusion',
     'unit' : '',
-    'description' : 'Distance based on the offical languages and their phylogenetic trees '
+    'description' : 'Blah Blah '
   }, 'column_name': {
     'full_name' : 'Other Metric Title',
     'unit' : 'mynunit',
@@ -59,7 +59,7 @@ var path = d3.geoPath()
 var svgLegend4 = svg4.append("g").attr("class", "legendJenks")
   .attr("transform", "translate(60,"+$ (".container").width()*0.45  +")");
 
-function  diplay_scale4(color_scale)
+function  diplay_scale4(color_scale4)
  {
   mylabels = new Array(jenks_sets.length+1)
   var form = d3.format(",.2r")
@@ -81,12 +81,12 @@ function  diplay_scale4(color_scale)
 
   var legend = d3.legendColor()
     .labels(mylabels)
-    .scale(color_scale)
+    .scale(color_scale4)
     svgLegend4.call(legend);
 }
 
 
-function fill_color4(all_data,d,variableSelected,selected_country,color_scale) {
+function fill_color4(all_data,d,variableSelected,selected_country,color_scale4) {
   if (  dropped_countries.indexOf(d.id) != -1 ) {
     return 'FloralWhite'
   }
@@ -96,13 +96,21 @@ function fill_color4(all_data,d,variableSelected,selected_country,color_scale) {
     return '#EEEEEE'
 
   }
-  return color_scale(data_event[d.id])
+  return color_scale4(data_event[d.id])
 };
 
 // Function that creates a color scale
 function create_scale4(all_data,variableSelected,selected_country) {
+  var countries = d3.keys(all_data[variableSelected])
+  console.log(countries);
+  var all_data_event = new Array(0)
+  for (var i = 0; i < countries.length; i++) {
+    all_data_event = all_data_event.concat(d3.values(all_data[variableSelected][countries[i]]));
+  }
+  console.log('LOL');
+  console.log(all_data_event)
 
-  var data_event = all_data;
+  var data_event = all_data_event;
   var values_event = d3.values(data_event).sort(function(a, b){return a-b});
   all_data
   unique_values = new Array(0)
@@ -132,7 +140,7 @@ function create_scale4(all_data,variableSelected,selected_country) {
     }
   }
 
-  if (variableSelected != 'flight_distance' && variableSelected != 'neib_distance'){
+  if (variableSelected != 'graph_diffusion' && variableSelected != 'others'){
     jenks_colors.reverse()
 
   }
@@ -155,13 +163,14 @@ function strocke_width4(d) {
 
 
 
+
+
 function updateMap4(variableSelected,selected_country) {
   var mylabels;
   var path_json;
   var raw_data;
   var all_data;
   var jenks_sets;
-  var color_scale;
   var form = d3.format(",.2f")
 
   var path_json = "/I-Measurement/measurement.json";
@@ -170,8 +179,16 @@ function updateMap4(variableSelected,selected_country) {
   d3.json(path_json, function(error, all_raw_data) {
   d3.json(path_diffusions_json, function(error, diffusion_data) {
     console.log(error);
+    console.log(diffusion_data);
     all_data = diffusion_data[variableSelected][selected_country]
-    color_scale = create_scale4(all_data,variableSelected,selected_country);
+    console.log('color_scale4');
+    console.log(color_scale4);
+    if ( color_scale4 ) {
+    } else {
+      console.log('color_scale4_creation')
+      color_scale4 = create_scale4(diffusion_data,variableSelected,selected_country);
+
+    }
 
   d3.json("/topojson/world/countries.json", function(error, world) {
     if (error) throw error;
@@ -215,7 +232,7 @@ function updateMap4(variableSelected,selected_country) {
           .enter().append("path")
           .attr("d", path)
           .attr("class", "country")
-          .style("fill",  function(d) {return fill_color4(all_data,d,variableSelected,selected_country,color_scale)}
+          .style("fill",  function(d) {return fill_color4(all_data,d,variableSelected,selected_country,color_scale4)}
             )
           .style("stroke", 'LightGrey' )
           .style("stroke-width", function(d) {return strocke_width4(d)}
@@ -223,7 +240,7 @@ function updateMap4(variableSelected,selected_country) {
           .on('mouseover', function(d, i) {
                 d3.select(this).style("stroke", "LightGrey")
                   .style("fill",  function(d) {
-                        return d3.rgb(fill_color4(all_data,d,variableSelected,selected_country,color_scale)).brighter(0.1).toString() });
+                        return d3.rgb(fill_color4(all_data,d,variableSelected,selected_country,color_scale4)).brighter(0.1).toString() });
                 tooltip4.style("display", "inline");
               })
           .on('mousemove',function(d,i) {
@@ -274,7 +291,7 @@ function updateMap4(variableSelected,selected_country) {
           })
           .on('mouseout', function(d, i) {
                   d3.select(this)//.style('stroke-width', width_line_normal)
-                    .style("fill",  function(d) {return fill_color4(all_data,d,variableSelected,selected_country,color_scale)})
+                    .style("fill",  function(d) {return fill_color4(all_data,d,variableSelected,selected_country,color_scale4)})
                     .style("stroke", "LightGrey");
                   tooltip4.style("display", "none");
               }
@@ -282,7 +299,7 @@ function updateMap4(variableSelected,selected_country) {
             .on("click", function(d){
                   updateMap4(variableSelected,d.id)
             });
-            diplay_scale4(color_scale)
+            diplay_scale4(color_scale4)
 
           });
         });
@@ -296,6 +313,8 @@ d3.selectAll('#radio4').selectAll('input')
     updateMap4(metric_selected,'USA');
 });
 
+var color_scale4;
 
 
-  updateMap4("language",'USA');
+
+updateMap4("graph_diffusion",'USA');
