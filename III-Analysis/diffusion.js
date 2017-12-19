@@ -224,7 +224,7 @@ function updateMap4(variableSelected,selected_country) {
 
           titleMap4.append('h1').append('h1').text(diffusion_information[variableSelected]['full_name'])
 
-          titleMap4.append('h3').style("font-weight", "900").text('to ' +  all_raw_data['name'][selected_country] );
+          titleMap4.append('h3').style("font-weight", "900").text('from ' +  all_raw_data['name'][selected_country] );
 
 
           svgMap4.selectAll("path")
