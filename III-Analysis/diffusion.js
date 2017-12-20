@@ -118,18 +118,8 @@ function create_scale4(all_data,variableSelected,selected_country) {
     var data_event = all_data['graph_diffusion'][selected_country];
   }
 
-  var values_event = d3.values(data_event).sort(function(a, b){return a-b});
-  all_data
-  unique_values = new Array(0)
-  for (var i = 0; i < values_event.length; i++) {
-    if (unique_values.indexOf(values_event[i]) == -1 && values_event[i] != null){
-      unique_values.push(values_event[i])
 
-    }
-  }
-  k = d3.max([d3.min([8,unique_values.length]),2]);
-
-  jenks_sets = ss.ckmeans(values_event,k);
+  jenks_sets = ss.ckmeans(data_event,k);
 
   var total_length = 0;
 
