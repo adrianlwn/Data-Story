@@ -320,7 +320,7 @@ function updateMap1(variableSelected,normalized) {
                 .on('mouseover', function(d, i) {
                   d3.select(this)
                     //.style("stroke", "LightGrey");
-                    .style("r", "6px");
+                    .attr("r", "6px");
                     tooltip1.style("display", "inline");
 
 
@@ -328,7 +328,7 @@ function updateMap1(variableSelected,normalized) {
                 .on('mouseout', function(d, i) {
                   d3.select(this)
                     //.style("stroke", "LightGrey");
-                    .style("r","3px");
+                    .attr("r","3px");
                     tooltip1.style("display", "none")
                             .style("height","")
                             .style("background","")
