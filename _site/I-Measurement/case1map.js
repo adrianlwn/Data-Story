@@ -217,9 +217,8 @@ function updateMap1(variableSelected,normalized) {
   var form = d3.format(",")
 
 
-  
-  var path_normalized_json = "{{ "/I-Measurement/measurement_norm.json" | prepend: site.baseurl }}";
-  var path_json = "{{ "/I-Measurement/measurement.json" | prepend: site.baseurl }}";
+  var path_normalized_json = "./I-Measurement/measurement_norm.json";
+  var path_json = "./I-Measurement/measurement.json";
   if (normalized == 'tweet_normalized'){
     var path_output_json = path_normalized_json;
   }

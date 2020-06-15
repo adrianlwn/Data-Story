@@ -128,8 +128,8 @@ function updateMap2(variableSelected,normalized) {
 
 
 
-  var path_normalized_json = "/I-Measurement/measurement_norm.json";
-  var path_json = "/I-Measurement/measurement.json";
+  var path_normalized_json = "./I-Measurement/measurement_norm.json";
+  var path_json = "./I-Measurement/measurement.json";
   if (normalized == 'tweet_normalized'){
     var path_output_json = path_normalized_json;
   }
